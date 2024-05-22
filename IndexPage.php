@@ -308,7 +308,7 @@
                         Find Your Next Favorite Read with Personalized Recommendations.
                     </p>
 
-                    <a href="" class="button">More here</a>
+                    <a href="searchPage.php" class="button">More here</a>
                 </div>
 
                 <div class="search__images">

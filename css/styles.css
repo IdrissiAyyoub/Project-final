@@ -918,10 +918,6 @@ body.dark-theme {
     width: initial;
   }
 
-  .services__container {
-    column-gap: 10rem;
-  }
-
   .services__card i {
     font-size: 3.5rem;
   }
