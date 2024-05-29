@@ -72,18 +72,28 @@
         </div>
         <!-- ------------------------main-content------------------------------ -->
         <div class="main-content">
-
             <div class="create-post">
                 <div class="create-post-input">
                     <img src="./images/user-1.png" alt="">
-                    <textarea name="" id="" cols="2" placeholder="Write a post"></textarea>
+                    <textarea placeholder="Write a post"></textarea>
                 </div>
                 <div class="post-button">
                     <button>Post</button>
                 </div>
             </div>
 
+            <div class="sort-by">
+                <hr>
+                <p>Sort by: <span>top <i class="ri-arrow-down-s-line"></i></span></p>
+            </div>
+
+            <div class="post">
+                <div class="post-author">
+                    <img src="./images/user-3.png" alt="">
+                </div>
+            </div>
         </div>
+
         <!-- ----------------------right-sidebar----------------------------------- -->
         <div class="right-sidebar">
             <div class="search-container">

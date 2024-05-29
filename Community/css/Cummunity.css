@@ -299,20 +299,30 @@ a {
     border-radius: 5px;
     cursor: pointer;
 }
-
 /* ------------------------main-content-------------------- */
 .main-content {
     flex-basis: 45%;
+    margin: 0 auto;
+
+  
 }
+
 .create-post {
     background: #ffffff;
     display: flex;
+    flex-direction: column;
 
+    /* Add some rounded corners */
+    overflow: hidden;
+    /* Ensure child elements don't overflow */
 }
+
 .create-post-input {
-    padding: 20px 20px 10px;
+    padding: 20px;
     display: flex;
     align-items: flex-start;
+    border-bottom: 1px solid #ddd;
+    /* Add a bottom border for separation */
 }
 
 .create-post-input img {
@@ -328,7 +338,63 @@ a {
     resize: none;
     background: transparent;
     margin-top: 8px;
+    font-size: 14px;
+    /* Ensure font size matches design */
+    font-family: Arial, sans-serif;
+    /* Ensure font family matches design */
 }
-::placeholder{
+
+.create-post-input textarea::placeholder {
     font-weight: 500;
 }
+
+.post-button {
+    padding: 10px 20px;
+    text-align: right;
+    /* Align button to the right */
+}
+
+.post-button button {
+    background-color: #007BFF;
+    /* Set a background color */
+    color: #fff;
+    /* Set text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    /* Add a transition effect */
+}
+
+.post-button button:hover {
+    background-color: #0056b3;
+    /* Darken the button on hover */
+}
+.sort-by {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.sort-by hr {
+    flex: 1;
+    border: 0;
+    height: 1px;
+    background: #ccc;
+}
+
+.sort-by p{
+    font-size: 13px;
+    padding-left: 5px;
+}
+.sort-by p span {
+    font-weight: 600;
+    cursor: pointer;
+}
+.sort-by p span i {
+    width: 12px;
+    margin-left: 3px;
+}
+
