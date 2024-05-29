@@ -1,0 +1,334 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Montagu+Slab:opsz,wght@16..144,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+
+    /*========== Colors ==========*/
+
+    --first-color: hsl(230, 62%, 56%);
+    --title-color: hsl(230, 70%, 16%);
+    --text-color: hsl(230, 16%, 45%);
+    --border-color: #d9ddf2;
+    --white-color: hsl(0, 0%, 100%);
+    --body-color: hsl(230, 100%, 96%);
+    --container-color: #f0f2ff;
+
+    /*========== Font and typography ==========*/
+
+    --body-font: "Montserrat", sans-serif;
+    --second-font: "Montagu Slab", serif;
+    --biggest-font-size: 2rem;
+    --h1-font-size: 1.5rem;
+    --h2-font-size: 1.25rem;
+    --h3-font-size: 1rem;
+    --normal-font-size: .938rem;
+    --small-font-size: .813rem;
+    --smaller-font-size: .75rem;
+
+    /*========== Font weight ==========*/
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semi-bold: 600;
+}
+
+
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: var(--body-font);
+}
+
+body {
+    background-color: var(--container-color);
+    color: var(--text-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--container-color);
+    padding: 6px 6%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav__logo {
+    display: inline-flex;
+    align-items: center;
+    column-gap: .5rem;
+    color: var(--first-color);
+    font-weight: var(--font-medium);
+}
+
+.nav__logo i {
+    font-size: 1.25rem;
+}
+
+.navbar-center ul li {
+    display: inline-block;
+    list-style: none;
+}
+
+.navbar-center ul li a {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 400;
+    margin: 5px 8px;
+    padding-right: 5px;
+    font-family: var(--second-font);
+    position: relative;
+}
+
+.navbar-center ul li a img {
+    width: 30px;
+}
+
+.navbar-center ul li a::after {
+    content: '';
+    width: 0;
+    height: 2px;
+    background: var(--title-color);
+    position: absolute;
+    bottom: -15px;
+    transition: width .3s;
+}
+
+.navbar-center ul li a:hover::after,
+.navbar-center ul li a.active-link::after {
+    width: 100%;
+}
+
+.nav-profile-img {
+    width: 40px;
+    border-radius: 50%;
+    display: block;
+    cursor: pointer;
+    position: relative;
+}
+
+/* ---------------- navbar end -------------- */
+
+.container {
+    padding: 20px 6%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+
+/* ---------------------left sidebar--------------- */
+.left-sidebar {
+    flex-basis: 25%;
+    align-self: flex-start;
+}
+
+.sidebar-profile-box {
+    background: #ffffff;
+}
+
+.sidebar-profile-info {
+    padding: 0 25px;
+}
+
+.sidebar-profile-info img {
+    width: 90px;
+    border-radius: 50%;
+    background: var(--container-color);
+    padding: 4px;
+    margin-top: -45px;
+}
+
+.sidebar-profile-info h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+}
+
+.sidebar-profile-info h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #777;
+}
+
+.sidebar-profile-info ul {
+    list-style: none;
+    margin: 20px 0;
+}
+
+.sidebar-profile-info ul li {
+    width: 100%;
+    margin: 5px 0;
+    font-size: 13px;
+}
+
+.sidebar-profile-info ul li span {
+    float: right;
+    color: var(--first-color);
+}
+
+.sidebar-profile-link {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc;
+}
+
+.sidebar-profile-link a {
+    flex-basis: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0;
+    font-size: 13px;
+    border-left: 1px solid #ccc;
+}
+
+.sidebar-profile-link a:first-child {
+    border-left: 0;
+}
+
+.sidebar-profile-link a i {
+    width: 20px;
+    margin-right: 10px;
+    font-size: 1.4rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ---------------------right sidebar---------------------------------- */
+
+.right-sidebar {
+    flex-basis: 25%;
+    align-self: flex-start;
+}
+
+.search-container {
+    background: #ffffff;
+    padding: 20px;
+
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-container h3 {
+    font-size: var(--h2-font-size);
+    margin-bottom: 15px;
+    color: var(--title-color);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #f0f2ff;
+    border-radius: 50px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    border: none;
+    background: none;
+    outline: none;
+    flex: 1;
+    font-size: var(--normal-font-size);
+    color: var(--text-color);
+}
+
+.search-box i {
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+.search-result {
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.search-result-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.search-result-item h4 {
+    margin: 0;
+    font-size: var(--h3-font-size);
+    color: var(--title-color);
+}
+
+.search-result-item p {
+    margin: 0;
+    font-size: var(--small-font-size);
+    color: var(--text-color);
+}
+
+.follow-btn {
+    margin-left: auto;
+    padding: 5px 10px;
+    font-size: var(--small-font-size);
+    background: var(--first-color);
+    color: var(--white-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ------------------------main-content-------------------- */
+.main-content {
+    flex-basis: 45%;
+}
+.create-post {
+    background: #ffffff;
+    display: flex;
+
+}
+.create-post-input {
+    padding: 20px 20px 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.create-post-input img {
+    width: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.create-post-input textarea {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    resize: none;
+    background: transparent;
+    margin-top: 8px;
+}
+::placeholder{
+    font-weight: 500;
+}
