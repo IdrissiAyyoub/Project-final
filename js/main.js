@@ -180,3 +180,57 @@ sr.reveal('.home__images', { delay: 600 })
 sr.reveal('.services__card', { interval: 100 })
 sr.reveal('.search__card', { origin: 'left' })
 sr.reveal('.search__images', { origin: 'right' })
+
+
+// Fetch API
+
+const API_ENDPOINT = "https://www.googleapis.com/books/v1/volumes?q=subject:fiction+year:2024&orderBy=relevance&maxResults=40&key=AIzaSyBoRapgZn6sbfT03pNKLC-fCVyPeuzN7ew"; // Replace YOUR_API_KEY with your actual API key
+
+fetch(API_ENDPOINT)
+  .then(response => response.json())
+  .then(data => {
+    const booksContainer = document.querySelector('.featured__swiper .swiper-wrapper');
+    const books = data.items;
+
+    books.forEach(book => {
+      const article = document.createElement('article');
+      article.classList.add('featured__card');
+      article.classList.add('swiper-slide');
+
+      const img = document.createElement('img');
+      img.src = book.volumeInfo.imageLinks.thumbnail || './Images/default.jpg'; // Default image path if thumbnail is not available
+      img.alt = 'image';
+      img.classList.add('featured__img');
+
+      const title = document.createElement('h2');
+      title.classList.add('featured__title');
+      title.textContent = book.volumeInfo.title || 'Untitled'; // Default title if not available
+
+      const authors = document.createElement('div');
+      authors.classList.add('featured__prices');
+      const authorsList = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author'; // Default author if not available
+      authors.innerHTML = `<span class="featured__discount">${authorsList}</span><br>`;
+
+      const detailsButton = document.createElement('button');
+      detailsButton.classList.add('button');
+      detailsButton.textContent = 'Details';
+
+      const actionsDiv = document.createElement('div');
+      actionsDiv.classList.add('featured__actions');
+      const saveButton = document.createElement('button');
+      saveButton.innerHTML = '<i class="ri-save-line"></i>';
+      const shareButton = document.createElement('button');
+      shareButton.innerHTML = '<i class="ri-share-forward-2-fill"></i>';
+      actionsDiv.appendChild(saveButton);
+      actionsDiv.appendChild(shareButton);
+
+      article.appendChild(img);
+      article.appendChild(title);
+      article.appendChild(authors); // Replaced description with authors
+      article.appendChild(detailsButton);
+      article.appendChild(actionsDiv);
+
+      booksContainer.appendChild(article);
+    });
+  })
+  .catch(error => console.error('Error fetching data:', error));

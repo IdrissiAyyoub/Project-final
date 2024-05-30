@@ -155,135 +155,7 @@
             <div class="featured__container container">
                 <div class="featured__swiper swiper">
                     <div class="swiper-wrapper">
-                        <article class="featured__card swiper-slide">
-                            <img src="./Images/9781635577990.jpg" alt="image" class="featured__img">
-
-                            <h2 class="featured__title">Featured Book</h2>
-                            <div class="featured__prices">
-                                <span class="featured__discount">Bla Bla Bla </span><br>
-
-                            </div>
-
-                            <button class="button">Details</button>
-
-                            <div class="featured__actions">
-                                <button><i class="ri-save-line"></i></button>
-                                <button><i class="ri-share-forward-2-fill"></i></button>
-                            </div>
-                        </article>
-
-                        <article class="featured__card swiper-slide">
-                            <img src="./Images/9781635577990.jpg" alt="image" class="featured__img">
-
-                            <h2 class="featured__title">Featured Book</h2>
-                            <div class="featured__prices">
-                                <span class="featured__discount">Bla Bla Bla </span><br>
-
-                            </div>
-
-                            <button class="button">Details</button>
-
-                            <div class="featured__actions">
-                                <button><i class="ri-save-line"></i></button>
-                                <button><i class="ri-share-forward-2-fill"></i></button>
-                            </div>
-                        </article>
-                        <article class="featured__card swiper-slide">
-                            <img src="./Images/9781635577990.jpg" alt="image" class="featured__img">
-
-                            <h2 class="featured__title">Featured Book</h2>
-                            <div class="featured__prices">
-                                <span class="featured__discount">Bla Bla Bla </span><br>
-
-                            </div>
-
-                            <button class="button">Details</button>
-
-                            <div class="featured__actions">
-                                <button><i class="ri-save-line"></i></button>
-                                <button><i class="ri-share-forward-2-fill"></i></button>
-                            </div>
-                        </article>
-                        <article class="featured__card swiper-slide">
-                            <img src="./Images/9781635577990.jpg" alt="image" class="featured__img">
-
-                            <h2 class="featured__title">Featured Book</h2>
-                            <div class="featured__prices">
-                                <span class="featured__discount">Bla Bla Bla </span><br>
-
-                            </div>
-
-                            <button class="button">Details</button>
-
-                            <div class="featured__actions">
-                                <button><i class="ri-save-line"></i></button>
-                                <button><i class="ri-share-forward-2-fill"></i></button>
-                            </div>
-                        </article>
-                        <article class="featured__card swiper-slide">
-                            <img src="./Images/9781635577990.jpg" alt="image" class="featured__img">
-
-                            <h2 class="featured__title">Featured Book</h2>
-                            <div class="featured__prices">
-                                <span class="featured__discount">Bla Bla Bla </span><br>
-
-                            </div>
-
-                            <button class="button">Details</button>
-
-                            <div class="featured__actions">
-                                <button><i class="ri-save-line"></i></button>
-                                <button><i class="ri-share-forward-2-fill"></i></button>
-                            </div>
-                        </article>
-                        <article class="featured__card swiper-slide">
-                            <img src="./Images/9781635577990.jpg" alt="image" class="featured__img">
-
-                            <h2 class="featured__title">Featured Book</h2>
-                            <div class="featured__prices">
-                                <span class="featured__discount">Bla Bla Bla </span><br>
-
-                            </div>
-
-                            <button class="button">Details</button>
-
-                            <div class="featured__actions">
-                                <button><i class="ri-save-line"></i></button>
-                                <button><i class="ri-share-forward-2-fill"></i></button>
-                            </div>
-                        </article>
-                        <article class="featured__card swiper-slide">
-                            <img src="./Images/9781635577990.jpg" alt="image" class="featured__img">
-
-                            <h2 class="featured__title">Featured Book</h2>
-                            <div class="featured__prices">
-                                <span class="featured__discount">Bla Bla Bla </span><br>
-
-                            </div>
-
-                            <button class="button">Details</button>
-
-                            <div class="featured__actions">
-                                <button><i class="ri-save-line"></i></button>
-                                <button><i class="ri-share-forward-2-fill"></i></button>
-                            </div>
-                        </article>
-                        <article class="featured__card swiper-slide">
-                            <img src="./Images/9781635577990.jpg" alt="image" class="featured__img">
-
-                            <h2 class="featured__title">Featured Book</h2>
-                            <div class="featured__prices">
-                                <span class="featured__discount">Bla Bla Bla </span><br>
-
-                            </div>
-
-                            <button class="button">Details</button>
-
-                            <div class="featured__actions">
-                                <button><i class="ri-save-line"></i></button>
-                                <button><i class="ri-share-forward-2-fill"></i></button>
-                            </div>
-                        </article>
+                        <!-- JavaScript will populate this section with book data -->
                     </div>
 
                     <div class="swiper-button-prev">
@@ -295,6 +167,7 @@
                 </div>
             </div>
         </section>
+
 
         <!--==================== DISCOUNT ====================-->
         <section class="search section" id="search">
