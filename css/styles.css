@@ -427,7 +427,8 @@ body.dark-theme {
   position: relative;
   text-align: center;
   background-color: var(--container-color);
-  min-height: 300px;
+  max-height: 400px;
+  box-sizing: border-box;
   padding: 2rem;
   overflow: hidden;
   border: 2px solid var(--border-color);
@@ -435,10 +436,14 @@ body.dark-theme {
 }
 
 .featured__img {
-  width: 150px;
-  margin: 0 auto .75rem;
+  max-width: 150px;
+  max-height: 200px;
+  display: block;
+  /* Fügt display block hinzu, um das Margin auto korrekt anzuwenden */
+  margin: 0 auto 0.75rem;
+  /* Das Margin sorgt für den Abstand unten */
   box-shadow: -8px 9px 11.8px 0px #00000067;
-
+  /* Schatteneffekt */
 }
 
 .featured__title {

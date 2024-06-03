@@ -133,6 +133,8 @@ a {
 .left-sidebar {
     flex-basis: 25%;
     align-self: flex-start;
+    position: sticky;
+    top: 74px;
 }
 
 .sidebar-profile-box {
@@ -220,6 +222,8 @@ a {
 .right-sidebar {
     flex-basis: 25%;
     align-self: flex-start;
+    position: sticky;
+    top: 74px ;
 }
 
 .search-container {
@@ -398,3 +402,136 @@ a {
     margin-left: 3px;
 }
 
+.post {
+    background: #fff;
+    padding: 20px 25px 5px;
+    margin: 5px 0 15px;
+}
+
+.post-author {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.post-author img {
+    width: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.post-author h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.post-author small {
+    display: block;
+    margin-bottom: -2px;
+}
+
+.post p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.post-stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 6px;
+}
+
+.linked-user {
+    margin-left: 10px;
+}
+
+.post-activity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size:  14px;
+    font-weight: 500;
+}
+
+.post-activity div {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* .post-activity i {
+    width: 22px;
+} */
+
+.post-activity-link i {
+    width: 18px;
+    margin-right: 4px;
+}
+
+/* ------------------Profile drop down ---------------- */
+
+.profile-menu-wrap {
+    position: absolute;
+    top: 100%;
+    right: 5%;
+    width: 320px;
+}
+
+.profile-menu {
+    background: #222;
+    color: #fff;
+    padding: 20px;
+    margin: 10px ;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.user-info h3 {
+    font-weight: 500;
+    margin-bottom: -7px;
+}
+
+.user-info a {
+    color: var(--border-color);
+    font-size: 13px;
+}
+
+.profile-menu hr {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--white-color);
+    margin: 15px 0 10px;
+}
+.profile-link-menu {
+    display: flex;
+    align-items: center;
+    color: var(--white-color);
+    margin: 12px 0;
+    font-size: 14px;
+}
+
+.profile-link-menu p{
+    width: 100%;
+}
+
+.profile-link-menu i {
+    width: 35px;
+    margin-right: 5px;
+}

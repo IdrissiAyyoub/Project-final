@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
 
     <!--=============== REMIXICONS ===============-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
 
     <!--=============== SWIPER CSS ===============-->
     <link rel="stylesheet" href="./css/swiper-bundle.min.css">
@@ -86,69 +86,38 @@
 
         <i class="ri-close-line login__close" id="login-close"></i>
     </div>
-    <div class="book-detail">
-        <div class="backdrop-image" style="background-image: url(./Images/9780593570616.jpg);">
-
-        </div>
-        <figure class="poster-box book-poster">
-            <img src="./Images/9780593570616.jpg" alt="" class="img-cover">
-        </figure>
-
-        <div class="detail-box">
-            <div class="detail-content">
-                <h1 class="heading">Atomic Habits</h1>
-                <div class="meta-list">
-                    <div class="meta-item">
-                        <img src="./Images/9780593570616.jpg" alt="rating" width="20" height="20">
-                        <span class="span">6</span>
-                    </div>
-
-                    <div class="separator"></div>
-                    <div class="meta-item">88 pages</div>
-
-                    <div class="separator"></div>
-
-                    <div class="meta-item">2018</div>
-
-                    <div class="meta-item card-badge">PG-05</div>
-
-
+    <br>
+    <main>
+        <section class="book-details">
+            <div class="book-cover">
+                <img id="book-cover" src="" alt="Book Cover">
+            </div>
+            <div class="book-info">
+                <h1 id="book-title"></h1>
+                <p class="rating" id="book-rating"></p>
+                <p class="genre" id="book-genre"></p>
+                <p class="description" id="book-description"></p>
+                <div class="authors">
+                    <p><strong>Authors:</strong> <span id="book-authors"></span></p>
+                    <p><strong>Publisher:</strong> <span id="book-publisher"></span></p>
                 </div>
-
-                <p class="genre">Animation, Acttion, </p>
-                <p class="overflow">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex eius rem omnis vitae quam saepe ipsam. Maxime commodi, nobis laborum quod aliquam iusto aperiam dicta doloribus! Fugit exercitationem provident aut!
-                </p>
-                <ul class="details-list">
-                    <div class="list-item">
-                        <p class="list-name">Starring</p>
-
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi quisquam ab architecto qui facilis dolor perspiciatis, tempore nesciunt eaque fugit alias repellendus nostrum dolorum cumque, sed provident beatae culpa iusto.
-
-                        </p>
+                <div class="links">
+                    <p>
+                        <strong>Links :</strong>
+                    <div class="link-section">
+                        <a href="#" id="preview-link">Preview</a>
+                        <a href="#" id="info-link">Info</a>
+                        <a href="#" id="web-reader-link">Web Reader</a>
                     </div>
-                    <div class="list-item">
-                        <p class="list-name">Direct by </p>
-
-                        <p>
-                            Louis macro
-                        </p>
+                    <div class="share-section">
+                        <a href="#"><i class="ri-share-forward-line"></i> Share</a>
+                        <a href="#"><i class="ri-save-line"></i> Save</a>
                     </div>
-                </ul>
-            </div>
-
-            <div class="title-wrapper">
-                <h3 class="title-large">More links</h3>
-            </div>
-
-            <div class="slider-list">
-                <div class="slider-inner">
-                    <div class="video-card"></div>
+                    </p>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
 
     <!--==================== FOOTER ====================-->

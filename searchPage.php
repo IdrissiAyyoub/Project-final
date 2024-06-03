@@ -58,7 +58,6 @@
         </nav>
     </header>
 
-
     <!--==================== LOGIN ====================-->
     <div class="login grid" id="login-content">
         <form action="" class="login__from grid">
@@ -91,7 +90,7 @@
                 <div class="wrapper flexitem">
                     <div class="left">
                         <div class="dpt-cat">
-
+                            <!-- Department Category Placeholder -->
                         </div>
                     </div>
                     <div class="right">
@@ -103,7 +102,6 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -111,212 +109,38 @@
             <aside class="filters">
                 <section>
                     <h2>Category</h2>
-                    <label><input type="checkbox"> Action (19)</label>
-                    <label><input type="checkbox"> Fiction (7)</label>
-                    <label><input type="checkbox"> Romance (8)</label>
-                    <label><input type="checkbox"> Fantasy (14)</label>
+                    <label><input type="checkbox" name="category" value="action"> Action (19)</label>
+                    <label><input type="checkbox" name="category" value="fiction"> Fiction (7)</label>
+                    <label><input type="checkbox" name="category" value="romance"> Romance (8)</label>
+                    <label><input type="checkbox" name="category" value="fantasy"> Fantasy (14)</label>
                 </section>
 
                 <section>
                     <h2>Authors</h2>
-                    <label><input type="checkbox"> J.K. Rowling</label>
-                    <label><input type="checkbox"> Stephen King</label>
-                    <label><input type="checkbox"> Jane Austen</label>
-                    <label><input type="checkbox"> Harper Lee</label>
+                    <label><input type="checkbox" name="author" value="J.K. Rowling"> J.K. Rowling</label>
+                    <label><input type="checkbox" name="author" value="Stephen King"> Stephen King</label>
+                    <label><input type="checkbox" name="author" value="Jane Austen"> Jane Austen</label>
+                    <label><input type="checkbox" name="author" value="Harper Lee"> Harper Lee</label>
                 </section>
 
                 <section>
                     <h2>Language</h2>
-                    <label><input type="checkbox"> English</label>
-                    <label><input type="checkbox"> Spanish</label>
-                    <label><input type="checkbox"> French</label>
-                    <label><input type="checkbox"> German</label>
+                    <label><input type="checkbox" name="language" value="English"> English</label>
+                    <label><input type="checkbox" name="language" value="Spanish"> Spanish</label>
+                    <label><input type="checkbox" name="language" value="French"> French</label>
+                    <label><input type="checkbox" name="language" value="German"> German</label>
                 </section>
+
+
+
             </aside>
             <div class="popular__container container">
-                <div class="popular__grid">
-                    <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a> <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a> <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a> <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a> <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a> <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a> <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a> <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a> <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a> <a href="" class="popular__card swiper-slide">
-                        <img src="./Images/9780593570616.jpg" alt="image" class="popular__img">
-
-                        <div>
-                            <h2 class="popular__tiitle">Popular Books</h2>
-                            <div class="popular__prices">
-                                <span class="popular__author">
-                                    Jomas bla
-                                </span>
-                            </div>
-                            <div class="popular__stars">
-                                5 <i class="ri-star-fill"></i>
-                            </div>
-                            <div>
-                                <button class="PopularButton">Detailes</button>
-                            </div>
-                        </div>
-                    </a>
+                <div class="popular__grid" id="popularGrid">
+                    <!-- Search results will be injected here -->
                 </div>
             </div>
-
-
         </div>
-
     </section>
-
-
-
-
 
     <!--==================== FOOTER ====================-->
     <footer class="footer">
@@ -341,10 +165,10 @@
                             <a href="" class="footer__link">FAQs</a>
                         </li>
                         <li>
-                            <a href="" class="footer__link">Privacy pollice</a>
+                            <a href="" class="footer__link">Privacy policy</a>
                         </li>
                         <li>
-                            <a href="" class="footer__link">Terms of services</a>
+                            <a href="" class="footer__link"> Terms of services</a>
                         </li>
                     </ul>
                 </div>
@@ -387,6 +211,110 @@
 
     <!--=============== MAIN JS ===============-->
     <script src="./js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const API_KEY = "AIzaSyBoRapgZn6sbfT03pNKLC-fCVyPeuzN7ew"; // Replace with your actual API key
+            const popularGrid = document.getElementById('popularGrid');
+            const filters = document.querySelectorAll('.filters input[type="checkbox"]');
+
+            // Function to fetch books based on selected filters
+            function fetchBooks() {
+                const selectedFilters = getSelectedFilters();
+                let url = `https://www.googleapis.com/books/v1/volumes?key=${API_KEY}&q=`;
+
+                const query = Object.entries(selectedFilters)
+                    .map(([key, value]) => {
+                        if (value.length > 0) {
+                            return `${key}:${value.join('|')}`;
+                        }
+                        return '';
+                    })
+                    .filter(queryPart => queryPart !== '')
+                    .join('+');
+
+                url += query;
+
+                console.log("API URL:", url); // Debugging
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("API Response:", data); // Debugging
+                        displayBooks(data.items);
+                    })
+                    .catch(error => {
+                        console.error("Error fetching books:", error);
+                    });
+            }
+
+
+            // Function to get selected filters
+            function getSelectedFilters() {
+                const selectedFilters = {
+                    category: [],
+                    author: [],
+                    language: []
+                };
+
+                filters.forEach(filter => {
+                    if (filter.checked) {
+                        selectedFilters[filter.name].push(filter.value);
+                    }
+                });
+
+                return selectedFilters;
+            }
+
+            // Function to display books
+            function displayBooks(books) {
+                popularGrid.innerHTML = '';
+                if (!books || books.length === 0) {
+                    popularGrid.innerHTML = '<p>No results found.</p>';
+                    return;
+                }
+
+                books.forEach(book => {
+                    const bookInfo = book.volumeInfo;
+
+                    // Create a new card for the book
+                    const card = document.createElement("a");
+                    card.href = bookInfo.previewLink || "#"; // Link to Google Books preview or fallback to '#'
+                    card.classList.add("popular__card", "swiper-slide");
+                    card.target = "_blank"; // Open link in a new tab
+
+                    // Create the image element for the book cover
+                    const img = document.createElement("img");
+                    img.src = bookInfo.imageLinks?.thumbnail || 'default-thumbnail.jpg'; // Fallback image
+                    img.alt = `${bookInfo.title} cover`;
+                    img.classList.add("popular__img");
+
+                    // Create the content for the book card
+                    const content = document.createElement("div");
+                    content.classList.add("popular__content");
+                    content.innerHTML = `
+                <h2 class="popular__title">${bookInfo.title}</h2>
+                <div class="popular__author">${bookInfo.authors ? bookInfo.authors.join(", ") : "Unknown Author"}</div>
+                <div class="popular__stars">${bookInfo.averageRating || 'No Rating'} <i class="ri-star-fill"></i></div>
+                <button class="PopularButton">Details</button>
+            `;
+
+                    // Append image and content to the card
+                    card.appendChild(img);
+                    card.appendChild(content);
+
+                    // Append the card to the container
+                    popularGrid.appendChild(card);
+                });
+            }
+
+            // Event listener for changes in checkboxes
+            filters.forEach(filter => {
+                filter.addEventListener('change', () => {
+                    fetchBooks();
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
