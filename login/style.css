@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
-
+/*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Montagu+Slab:opsz,wght@16..144,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 *,
 *::before,
 *::after {
@@ -10,14 +10,14 @@
 
 body,
 input {
-  font-family: "Poppins", sans-serif;
+  font-family: "Montagu", sans-serif;
 }
 
 main {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background-color: #ff8c6b;
+  background: #d9ddf2;
   padding: 2rem;
   display: flex;
   align-items: center;
@@ -54,7 +54,6 @@ main {
   grid-template-rows: 1fr;
   transition: 0.8s ease-in-out;
 }
-
 form {
   max-width: 260px;
   width: 100%;
@@ -76,18 +75,26 @@ form.sign-up-form {
 .logo {
   display: flex;
   align-items: center;
+  margin-bottom: 0;
+  /* Add this to remove margin at the bottom */
 }
 
-.logo img {
-  width: 27px;
-  margin-right: 0.3rem;
+.nav__logo {
+  display: inline-flex;
+  align-items: center;
+  column-gap: .5rem;
+  color: #4960d4;
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.logo h4 {
-  font-size: 1.1rem;
-  margin-top: -9px;
-  letter-spacing: -0.5px;
-  color: #151111;
+.nav__logo i {
+  font-size: 1.9rem;
+}
+
+.heading {
+  margin-top: 0;
+  /* Add this to remove margin at the top */
 }
 
 .heading h2 {

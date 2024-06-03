@@ -4,7 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+    
+    <!--=============== REMIXICONS ===============-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+
     <title>Sign in & Sign up Form</title>
+    <!-- ============== CSS ================== -->
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -14,8 +22,9 @@
           <div class="forms-wrap">
             <form action="index.html" autocomplete="off" class="sign-in-form">
               <div class="logo">
-                <img src="./img/logo.png" alt="easyclass" />
-                <h4>easyclass</h4>
+              <a href="#" class="nav__logo">
+                <i class="ri-book-3-line"></i> SocialBook's
+              </a>
               </div>
 
               <div class="heading">
@@ -141,6 +150,6 @@
 
     <!-- Javascript file -->
 
-    <script src="./app.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

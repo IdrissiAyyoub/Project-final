@@ -7,12 +7,12 @@
 
   /*========== Colors ==========*/
 
-  --first-color: hsl(230, 62%, 56%);
+  --first-color: #4960d4;
   --title-color: hsl(230, 70%, 16%);
   --text-color: hsl(230, 16%, 45%);
   --border-color: #d9ddf2;
   --white-color: hsl(0, 0%, 100%);
-  --body-color: hsl(230, 100%, 96%);
+  --body-color: #ebeeff;
   --container-color: #f0f2ff;
 
   /*========== Font and typography ==========*/
