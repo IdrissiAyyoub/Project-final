@@ -33,12 +33,11 @@
             </ul>
         </div>
         <div class="navbar-right">
-
-            <img src="./images/user-1.png" class="nav-profile-img ">
+            <img src="./images/user-1.png" class="nav-profile-img " onclick="toggleMenu()">
         </div>
         <!-- -------------------- Profile-drop -----------------------  -->
 
-        <div class="profile-menu-wrap">
+        <div class="profile-menu-wrap" id="profileMenu">
             <div class="profile-menu">
                 <div class="user-info">
                     <img src="./images/user-1.png" alt="">
@@ -223,5 +222,13 @@
         </div>
     </div>
 </body>
+
+<script>
+    let profileMenu = document.getElementById('profileMenu');
+
+    function toggleMenu() {
+        profileMenu.classList.toggle('open-menu')
+    }
+</script>
 
 </html>
