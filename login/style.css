@@ -93,8 +93,7 @@ form.sign-up-form {
 }
 
 .heading {
-  margin-top: 0;
-  /* Add this to remove margin at the top */
+  margin-top: -60px;
 }
 
 .heading h2 {
