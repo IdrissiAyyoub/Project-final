@@ -105,7 +105,7 @@
           <div class="text-slider">
             <div class="text-wrap">
               <div class="text-group">
-                <h2>Create your own courses</h2>
+                <h2>Discover the wonderful world of books</h2>
                 <h2>Customize as you like</h2>
                 <h2>Invite students to your class</h2>
               </div>

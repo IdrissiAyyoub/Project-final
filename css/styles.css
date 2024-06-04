@@ -303,7 +303,7 @@ body.dark-theme {
 .login__input {
   width: 100%;
   background-color: var(--container-color);
-  border: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
   padding: 1rem;
   color: var(--text-color);
 }
