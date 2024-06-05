@@ -1,3 +1,8 @@
+<?php
+session_start();
+require 'config.php'; // Adjust the path as needed
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,40 +57,46 @@
                 </ul>
             </div>
             <div class="nav__actions">
-                <i class="ri-user-line login-button" id="login-button"></i>
-
+                <?php if (!isset($_SESSION['UserID'])) : ?>
+                    <i class="ri-user-line login-button" id="login-button"></i>
+                <?php else : ?>
+                    <!-- If user is logged in, display logout button -->
+                   <i class="ri-logout-circle-line"></i>
+                <?php endif; ?>
                 <i class="ri-moon-line change-theme" id="theme-button"></i>
             </div>
         </nav>
     </header>
 
+    <?php if (!isset($_SESSION['UserID'])) : ?>
+        <!--==================== LOGIN ====================-->
+        <div class="login grid" id="login-content">
+            <form action="" class="login__from grid">
+                <h3 class="login__title">Log In</h3>
+                <div class="login__group grid">
+                    <div>
+                        <label for="login-email" class="login__label">Email</label>
+                        <input type="email" placeholder="Write your email" id="login-email" class="login__input">
+                    </div>
 
-    <!--==================== LOGIN ====================-->
-    <div class="login grid" id="login-content">
-        <form action="" class="login__from grid">
-            <h3 class="login__title">Log In</h3>
-            <div class="login__group grid">
-                <div>
-                    <label for="login-email" class="login__label">Email</label>
-                    <input type="email" placeholder="Write your email" id="login-email" class="login__input">
+                    <div>
+                        <label for="login-pass" class="login__label">Password</label>
+                        <input type="password" placeholder="Enter your password" id="login-pass" class="login__input">
+                    </div>
                 </div>
 
                 <div>
-                    <label for="login-pass" class="login__label">Password</label>
-                    <input type="password" placeholder="Enter your password" id="login-pass" class="login__input">
+                    <span class="login__signup">
+                        You do not have an account? <a href="#">Sign up</a>
+                    </span>
+                    <button type="submit" class="login__button button">Log In</button>
                 </div>
-            </div>
+            </form>
 
-            <div>
-                <span class="login__signup">
-                    You do not have an account? <a href="#">Sign up</a>
-                </span>
-                <button type="submit" class="login__button button">Log In</button>
-            </div>
-        </form>
+            <i class="ri-close-line login__close" id="login-close"></i>
+        </div>
+    <?php endif; ?>
 
-        <i class="ri-close-line login__close" id="login-close"></i>
-    </div>
 
     <!--==================== MAIN ====================-->
     <main class="main">
