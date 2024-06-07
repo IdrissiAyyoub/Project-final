@@ -49,7 +49,8 @@ require 'config.php'; // Adjust the path as needed
                     </li>
 
                     <li class="nav__item">
-                        <a href="#community" class="nav__link">
+                        <a href="<?php echo isset($_SESSION['UserID']) ? 'Community/Community.php' : 'register/login.php'; ?>" class="nav__link">
+
                             <i class="ri-group-line"></i>
                             <span>Community</span>
                         </a>
@@ -61,7 +62,7 @@ require 'config.php'; // Adjust the path as needed
                     <i class="ri-user-line login-button" id="login-button"></i>
                 <?php else : ?>
                     <!-- If user is logged in, display logout button -->
-                   <i class="ri-logout-circle-line"></i>
+                    <i class="ri-logout-circle-line"></i>
                 <?php endif; ?>
                 <i class="ri-moon-line change-theme" id="theme-button"></i>
             </div>
@@ -87,7 +88,7 @@ require 'config.php'; // Adjust the path as needed
 
                 <div>
                     <span class="login__signup">
-                        You do not have an account? <a href="#">Sign up</a>
+                        You do not have an account? <a href="register/login.php">Sign up</a>
                     </span>
                     <button type="submit" class="login__button button">Log In</button>
                 </div>
@@ -111,7 +112,7 @@ require 'config.php'; // Adjust the path as needed
 
                     <p class="home__description">Explore, share, and discover the wonderful world of books with our online community. Join us today!</p>
 
-                    <a href="" class="button">Community</a>
+                    <a href="<?php echo isset($_SESSION['UserID']) ? 'Community/Community.php' : 'register/login.php'; ?>" class="button">Community</a>
                 </div>
 
                 <div class="home__images">

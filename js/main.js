@@ -408,5 +408,5 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('info-link').href = bookInfo.infoLink || "#";
         document.getElementById('web-reader-link').href = bookInfo.canonicalVolumeLink || "#";
     }
-});
 
+});
