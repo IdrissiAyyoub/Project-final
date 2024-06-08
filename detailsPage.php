@@ -1,6 +1,27 @@
 <?php
 session_start(); // Start the session if not already started
 $UserID = $_SESSION['UserID']; // Retrieve UserID from session
+// Include database configuration file
+require './config.php'; // Update with your actual config file path
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $bookID = $_POST['bookID'];
+    $userComment = $_POST['user-comment'];
+    $uploadDir = 'uploads/';
+    $uploadFile = $uploadDir . basename($_FILES['book-pdf-upload']['name']);
+
+    if (move_uploaded_file($_FILES['book-pdf-upload']['tmp_name'], $uploadFile)) {
+        $pdfPath = $uploadFile;
+
+        $stmt = $pdo->prepare("INSERT INTO sharedbooks (UserID, BookID, Comment, PDFPath) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$UserID, $bookID, $userComment, $pdfPath]);
+
+        header("Location: success.php"); // Redirect to a success page
+        exit();
+    } else {
+        echo "Possible file upload attack!";
+    }
+}
 ?>
 
 
