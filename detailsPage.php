@@ -1,3 +1,25 @@
+<?php
+session_start(); // Start the session if not already started
+$UserID = $_SESSION['UserID']; // Retrieve UserID from session
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,12 +87,14 @@
         }
 
         .button {
-            background-color: #007bff;
+            display: inline-block;
+            background-color: #4960d4;
+            width: 100%;
             color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
+            margin: 1rem;
+            padding: 1rem 1.5rem;
+            transition: box-shadow .4s;
+
         }
 
         .button-secondary {
@@ -116,6 +140,7 @@
         .modal-book-details {
             display: flex;
             flex-direction: column;
+            margin-left: 1.4rem;
         }
 
         .modal__title {
@@ -133,12 +158,13 @@
         }
 
         .modal__author {
-            color: var(--title-color);
+            color: #0c1645;
             margin-top: .5rem;
         }
 
         .modal__stars {
-            color: var(--first-color);
+
+            color: #4960d4;
         }
 
         .PopularButton {
@@ -275,87 +301,42 @@
         <span class="footer__copy">&#169 ; All Rights Reserved By SocialBook's</span>
     </footer>
 
-
-    <!-- Modal structure -->
     <div id="shareModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <div class="modal-comment-section">
-                <input type="text" id="user-comment" placeholder="Enter your comment or opinion">
-            </div>
-            <div class="modal-book-info">
-                <div class="modal-book-cover">
-                    <img id="modal-book-cover" src="" alt="Book Cover">
+            <form id="comment-form" action="submit_comment.php" method="post" enctype="multipart/form-data">
+                <div class="modal-comment-section">
+                    <input type="hidden" name="bookID" id="bookId" value="">
+                    <input type="text" name="comment" id="user-comment" placeholder="Enter your comment or opinion">
                 </div>
-                <div class="modal-book-details">
-                    <h2 class="modal__title" id="modal-book-title"></h2>
-                    <div class="modal__prices">
-                        <span class="modal__author" id="modal-book-author"></span>
+                <div class="modal-book-info">
+                    <div class="modal-book-cover">
+                        <img id="modal-book-cover" src="" alt="Book Cover">
                     </div>
-                    <div class="modal__stars" id="modal-book-rating"></div>
+                    <div class="modal-book-details">
+                        <h2 class="modal__title" id="modal-book-title"></h2>
+                        <p id="modal-book-rating"></p>
+                        <p id="modal-book-genre"></p>
+                        <p id="modal-book-authors"></p>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="button" id="submit-comment">Submit</button>
-                <button class="button button-secondary" id="cancel">Cancel</button>
-            </div>
+                <div class="modal-comment-section">
+                    <p>If you have the PDF of this book, please upload it to help the community:</p>
+                    <input type="file" id="book-pdf-upload" accept=".pdf">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="button">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
-
-
-
-
 
 
     <!-- Scripts -->
     <script src="./js/scrollreveal.min.js"></script>
     <script src="./js/swiper-bundle.min.js"></script>
     <script src="./js/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('shareModal');
-            const shareButton = document.getElementById('shareButton');
-            const closeModal = document.querySelector('.modal .close');
-            const cancelModal = document.getElementById('cancel');
-            const submitComment = document.getElementById('submit-comment');
 
-            const modalTitle = document.getElementById('modal-book-title');
-            const modalAuthor = document.getElementById('modal-book-author');
-            const modalRating = document.getElementById('modal-book-rating');
-
-            shareButton.addEventListener('click', function() {
-                const bookTitle = document.getElementById('book-title').textContent;
-                const bookAuthors = document.querySelector('.authors p strong').nextSibling.textContent.trim();
-                const bookRating = document.getElementById('book-rating').textContent.split(': ')[1];
-
-                modalTitle.textContent = bookTitle;
-                modalAuthor.textContent = `Author: ${bookAuthors}`;
-                modalRating.innerHTML = `Rating: ${bookRating} <i class="ri-star-fill"></i>`;
-
-                modal.style.display = 'block';
-            });
-
-            closeModal.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
-
-            cancelModal.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
-
-            window.addEventListener('click', function(event) {
-                if (event.target == modal) {
-                    modal.style.display = 'none';
-                }
-            });
-
-            submitComment.addEventListener('click', function() {
-                const userComment = document.getElementById('user-comment').value;
-                console.log(`Book: ${modalTitle.textContent}, Comment: ${userComment}`);
-                modal.style.display = 'none';
-            });
-        });
-    </script>
 </body>
 
 </html>
