@@ -4,22 +4,6 @@ $UserID = $_SESSION['UserID']; // Retrieve UserID from session
 ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
