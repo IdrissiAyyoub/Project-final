@@ -7,8 +7,8 @@
 
     /*========== Colors ==========*/
 
-    --first-color: hsl(230, 62%, 56%);
-    --title-color: hsl(230, 70%, 16%);
+    --first-color: #4960d4;
+    --title-color: #0c1645;
     --text-color: hsl(230, 16%, 45%);
     --border-color: #d9ddf2;
     --white-color: hsl(0, 0%, 100%);
@@ -412,6 +412,7 @@ main {
 .share-section a:hover {
     background-color: var(--first-color);
 }
+
 
 @media only screen and (min-width: 768px) {
     .book-details {
