@@ -348,18 +348,28 @@ main {
     align-items: center;
 }
 
+.book-cover-container {
+    display: flex;
+    flex-direction: column;
+    /* Ensures the cover is at the top */
+    align-items: center;
+    /* Centers the cover horizontally */
+    width: 100%;
+    /* Adjust as needed */
+}
+
 .book-cover {
-    margin-bottom: 20px;
+ 
+    
 }
 
 #book-cover {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+width: 120%;
+    margin-bottom: 180px;
 }
 
-.book-info {
-    text-align: center;
-}
 
 .book-info h1 {
     font-size: 2.5rem;
@@ -397,21 +407,38 @@ main {
     margin-bottom: 20px;
 }
 
-.link-section a,
-.share-section a {
+
+.link-section a {
     text-decoration: none;
+    background: var(--text-color);
     color: var(--white-color);
-    padding: 8px 20px;
-    border-radius: 20px;
+    padding: 5px 10px;
+    border-radius: 5px;
     font-size: 1rem;
     font-weight: bold;
-    transition: background-color 0.5s, color 0.5s;
+    transition: 0.5s;
 }
 
-.link-section a:hover,
-.share-section a:hover {
-    background-color: var(--first-color);
+
+.share-section {
+            margin-left: 500px;
 }
+
+.share-section a {
+    text-decoration: none;
+        background: var(--title-color);
+        color: var(--white-color);
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: 0.5s;
+}
+.link-section a:hover{
+    border-radius: 0px;
+}
+.share-section a:hover {
+border-radius: 0;}
 
 
 @media only screen and (min-width: 768px) {
@@ -523,6 +550,146 @@ main {
     text-align: center;
     font-size: var(--small-font-size);
 }
+   /* Modal styles */
+   .modal {
+       display: none;
+       position: fixed;
+       z-index: 1000;
+       left: 0;
+       top: 0;
+       width: 100%;
+       height: 100%;
+       overflow: auto;
+       background-color: rgba(0, 0, 0, 0.5);
+       padding-top: 60px;
+   }
+
+   .modal-content {
+       background-color: #fefefe;
+       margin: 5% auto;
+       padding: 20px;
+       border: 1px solid #888;
+       width: 80%;
+       max-width: 600px;
+       border-radius: 10px;
+   }
+
+   .close {
+       color: #aaa;
+       float: right;
+       font-size: 28px;
+       font-weight: bold;
+   }
+
+   .close:hover,
+   .close:focus {
+       color: black;
+       text-decoration: none;
+       cursor: pointer;
+   }
+
+   .modal-header {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       border-bottom: 1px solid #ddd;
+   }
+
+   .modal-body {
+       margin: 15px 0;
+   }
+
+   .modal-footer {
+       display: flex;
+       justify-content: flex-end;
+       border-top: 1px solid #ddd;
+   }
+
+   .button {
+       display: inline-block;
+       background-color: #4960d4;
+       width: 100%;
+       color: white;
+       margin: 1rem;
+       padding: 1rem 1.5rem;
+       transition: box-shadow .4s;
+
+   }
+
+   .button-secondary {
+       background-color: #6c757d;
+   }
+
+   .button:hover {
+       background-color: #0056b3;
+   }
+
+   .button-secondary:hover {
+       background-color: #5a6268;
+   }
+
+   .modal-comment-section {
+       margin-bottom: 20px;
+   }
+
+   .modal-comment-section input {
+       background-color: #f0f2ff;
+       color: #606785;
+       width: 100%;
+       border-bottom: 2px solid #d9ddf2;
+       padding: 1rem;
+   }
+
+   .modal-book-info {
+       display: flex;
+       align-items: flex-start;
+       /* Align items to the start */
+       margin-bottom: 20px;
+       border: 2px solid #d9ddf2;
+       padding: 2rem;
+   }
+
+   .modal-book-cover img {
+       width: 100px;
+       height: auto;
+       box-shadow: -8px 9px 11.8px 0px #00000067;
+       margin-right: 20px;
+   }
+
+   .modal-book-details {
+       display: flex;
+       flex-direction: column;
+       margin-left: 1.4rem;
+   }
+
+   .modal__title {
+       font-size: var(--h2-font-size);
+       margin-bottom: .5rem;
+   }
+
+   .modal__prices {
+       display: flex;
+       flex-direction: column;
+       /* Change direction to column */
+       align-items: flex-start;
+       /* Align items to the start */
+       margin-bottom: .75rem;
+   }
+
+   .modal__author {
+       color: #0c1645;
+       margin-top: .5rem;
+   }
+
+   .modal__stars {
+
+       color: #4960d4;
+   }
+
+   .PopularButton {
+       display: none;
+       /* Hide the details button */
+   }
 
 /*=============== BREAKPOINTS ===============*/
 /* For small devices */

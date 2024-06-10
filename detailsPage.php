@@ -1,8 +1,27 @@
 <?php
 session_start(); // Start the session if not already started
-$UserID = $_SESSION['UserID']; // Retrieve UserID from session
-// Include database configuration file
-require './config.php'; // Update with your actual config file path
+
+// Database configuration
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "pfe";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Retrieve UserID from session
+$UserID = $_SESSION['UserID'] ?? null;
+
+if (!$UserID) {
+    header("Location: register/login.php"); // Redirect to login page if not logged in
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $bookID = $_POST['bookID'];
@@ -10,20 +29,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $uploadDir = 'uploads/';
     $uploadFile = $uploadDir . basename($_FILES['book-pdf-upload']['name']);
 
-    if (move_uploaded_file($_FILES['book-pdf-upload']['tmp_name'], $uploadFile)) {
-        $pdfPath = $uploadFile;
+    // Check if the uploads directory exists, if not, create it
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
 
-        $stmt = $pdo->prepare("INSERT INTO sharedbooks (UserID, BookID, Comment, PDFPath) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$UserID, $bookID, $userComment, $pdfPath]);
+    // Verify if BookID exists in the books table
+    $stmt = $conn->prepare("SELECT BookID FROM books WHERE BookID = ?");
+    $stmt->bind_param("i", $bookID);
+    $stmt->execute();
+    $stmt->store_result();
 
-        header("Location: success.php"); // Redirect to a success page
-        exit();
+    if ($stmt->num_rows > 0) {
+        // BookID exists, proceed with file upload
+        if (move_uploaded_file($_FILES['book-pdf-upload']['tmp_name'], $uploadFile)) {
+            $pdfPath = $uploadFile;
+
+            $stmt = $conn->prepare("INSERT INTO sharedbooks (UserID, BookID, Comment, PDFPath) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("iiss", $UserID, $bookID, $userComment, $pdfPath);
+
+            if ($stmt->execute()) {
+                header("Location: success.php"); // Redirect to a success page
+                exit();
+            } else {
+                echo "Error: " . $stmt->error;
+            }
+
+            $stmt->close();
+        } else {
+            echo "Possible file upload attack!";
+        }
     } else {
-        echo "Possible file upload attack!";
+        echo "Invalid BookID. Please select a valid book.";
     }
 }
-?>
 
+$conn->close();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,148 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
     <link rel="stylesheet" href="./css/swiper-bundle.min.css">
     <link rel="stylesheet" href="./css/detailsPage.css">
-    <style>
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding-top: 60px;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 10px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .modal-body {
-            margin: 15px 0;
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            border-top: 1px solid #ddd;
-        }
-
-        .button {
-            display: inline-block;
-            background-color: #4960d4;
-            width: 100%;
-            color: white;
-            margin: 1rem;
-            padding: 1rem 1.5rem;
-            transition: box-shadow .4s;
-
-        }
-
-        .button-secondary {
-            background-color: #6c757d;
-        }
-
-        .button:hover {
-            background-color: #0056b3;
-        }
-
-        .button-secondary:hover {
-            background-color: #5a6268;
-        }
-
-        .modal-comment-section {
-            margin-bottom: 20px;
-        }
-
-        .modal-comment-section input {
-            background-color: #f0f2ff;
-            color: #606785;
-            width: 100%;
-            border-bottom: 2px solid #d9ddf2;
-            padding: 1rem;
-        }
-
-        .modal-book-info {
-            display: flex;
-            align-items: flex-start;
-            /* Align items to the start */
-            margin-bottom: 20px;
-            border: 2px solid #d9ddf2;
-            padding: 2rem;
-        }
-
-        .modal-book-cover img {
-            width: 100px;
-            height: auto;
-            box-shadow: -8px 9px 11.8px 0px #00000067;
-            margin-right: 20px;
-        }
-
-        .modal-book-details {
-            display: flex;
-            flex-direction: column;
-            margin-left: 1.4rem;
-        }
-
-        .modal__title {
-            font-size: var(--h2-font-size);
-            margin-bottom: .5rem;
-        }
-
-        .modal__prices {
-            display: flex;
-            flex-direction: column;
-            /* Change direction to column */
-            align-items: flex-start;
-            /* Align items to the start */
-            margin-bottom: .75rem;
-        }
-
-        .modal__author {
-            color: #0c1645;
-            margin-top: .5rem;
-        }
-
-        .modal__stars {
-
-            color: #4960d4;
-        }
-
-        .PopularButton {
-            display: none;
-            /* Hide the details button */
-        }
-    </style>
     <title>Document</title>
 </head>
 
@@ -263,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <a href="http://play.google.com/books/reader?id=KY2Om6YFseEC&hl=&source=gbs_api" id="web-reader-link">Web Reader</a>
                     </div>
                     <div class="share-section">
-                        <a href="#" id="shareButton"><i class="ri-share-forward-line"></i> Share</a>
+                        <a href="<?php echo isset($_SESSION['UserID']) ? '#' : 'register/login.php'; ?>" id="shareButton"><i class="ri-share-forward-line"></i> Share</a>
                         <a href="#"><i class="ri-save-line"></i> Save</a>
                     </div>
                 </div>
@@ -298,50 +198,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div>
                     <h3 class="footer__title">Contact</h3>
                     <ul class="footer__links">
-                        <li><a href="" class="footer__link">Email</a></li>
+                        <li><a href="" class="footer__link">Contact Us</a></li>
+                        <li><a href="" class="footer__link">Support</a></li>
+                        <li><a href="" class="footer__link">Affiliates</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        <span class="footer__copy">&#169 ; All Rights Reserved By SocialBook's</span>
+        <div class="footer__social">
+            <a href="#" class="footer__social-link"><i class="ri-facebook-line"></i></a>
+            <a href="#" class="footer__social-link"><i class="ri-twitter-line"></i></a>
+            <a href="#" class="footer__social-link"><i class="ri-instagram-line"></i></a>
+        </div>
+        <p class="footer__copy">&#169; 2024 SocialBook's. All rights reserved.</p>
     </footer>
 
-    <div id="shareModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form id="comment-form" action="submit_comment.php" method="post" enctype="multipart/form-data">
-                <div class="modal-comment-section">
-                    <input type="hidden" name="bookID" id="bookId" value="">
-                    <input type="text" name="comment" id="user-comment" placeholder="Enter your comment or opinion">
-                </div>
-                <div class="modal-book-info">
-                    <div class="modal-book-cover">
-                        <img id="modal-book-cover" src="" alt="Book Cover">
-                    </div>
-                    <div class="modal-book-details">
-                        <h2 class="modal__title" id="modal-book-title"></h2>
-                        <p id="modal-book-rating"></p>
-                        <p id="modal-book-genre"></p>
-                        <p id="modal-book-authors"></p>
-                    </div>
-                </div>
-                <div class="modal-comment-section">
-                    <p>If you have the PDF of this book, please upload it to help the community:</p>
-                    <input type="file" id="book-pdf-upload" accept=".pdf">
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="button">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <!-- Scripts -->
-    <script src="./js/scrollreveal.min.js"></script>
     <script src="./js/swiper-bundle.min.js"></script>
     <script src="./js/main.js"></script>
-
 </body>
 
 </html>
