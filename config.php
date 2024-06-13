@@ -3,6 +3,7 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "pfe";
+$googleApiKey = "AIzaSyBoRapgZn6sbfT03pNKLC-fCVyPeuzN7ew";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

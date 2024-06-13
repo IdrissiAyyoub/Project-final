@@ -19,14 +19,10 @@ if (loginClose) {
 
 /*=============== ADD SHADOW HEADER ===============*/
 const shadowHeader = () => {
-    const header = document.getElementById('header')
-
-    this.scrollY >= 50 ? header.classList.add('shadow-header')
-        : header.classList.remove('shadow-header')
-
-}
-window.addEventListener('scroll', shadowHeader)
-
+    const header = document.getElementById('header');
+    window.scrollY >= 50 ? header.classList.add('shadow-header') : header.classList.remove('shadow-header');
+};
+window.addEventListener('scroll', shadowHeader);
 
 /*=============== HOME SWIPER ===============*/
 let swiperHome = new Swiper('.home__swiper', {
@@ -109,13 +105,10 @@ let swiperTestmonial = new Swiper('.testimonial__swiper', {
 
 /*=============== SHOW SCROLL UP ===============*/
 const scrollUp = () => {
-    const scrollUp = document.getElementById('scroll-up')
-
-    this.scrollY >= 350 ? scrollUp.classList.add('show-scroll')
-        : scrollUp.classList.remove('show-scroll')
-
-}
-window.addEventListener('scroll', scrollUp)
+    const scrollUp = document.getElementById('scroll-up');
+    window.scrollY >= 350 ? scrollUp.classList.add('show-scroll') : scrollUp.classList.remove('show-scroll');
+};
+window.addEventListener('scroll', scrollUp);
 /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
 const sections = document.querySelectorAll('section[id]')
 
@@ -182,8 +175,9 @@ sr.reveal('.search__card', { origin: 'left' })
 sr.reveal('.search__images', { origin: 'right' })
 
 
-// Fetch API
-const API_ENDPOINT = "https://www.googleapis.com/books/v1/volumes?q=subject:fiction&orderBy=relevance&maxResults=40&key=AIzaSyBoRapgZn6sbfT03pNKLC-fCVyPeuzN7ew"; // Replace YOUR_API_KEY with your actual API key
+
+
+const API_ENDPOINT = "https://www.googleapis.com/books/v1/volumes?q=rating:>4&maxResults=40&key=AIzaSyBoRapgZn6sbfT03pNKLC-fCVyPeuzN7ew";
 
 fetch(API_ENDPOINT)
     .then(response => response.json())
@@ -193,27 +187,25 @@ fetch(API_ENDPOINT)
 
         books.forEach(book => {
             const article = document.createElement('article');
-            article.classList.add('featured__card');
-            article.classList.add('swiper-slide');
+            article.classList.add('featured__card', 'swiper-slide');
 
             const img = document.createElement('img');
-            img.src = book.volumeInfo.imageLinks.thumbnail || './Images/default.jpg'; // Default image path if thumbnail is not available
+            img.src = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : './Images/default.jpg';
             img.alt = 'image';
             img.classList.add('featured__img');
 
             const title = document.createElement('h2');
             title.classList.add('featured__title');
-            title.textContent = book.volumeInfo.title || 'Untitled'; // Default title if not available
+            title.textContent = book.volumeInfo.title || 'Untitled';
 
             const authors = document.createElement('div');
             authors.classList.add('featured__prices');
-            const authorsList = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author'; // Default author if not available
+            const authorsList = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author';
             authors.innerHTML = `<span class="featured__discount">${authorsList}</span><br>`;
 
             const detailsButton = document.createElement('button');
             detailsButton.classList.add('button');
             detailsButton.textContent = 'Details';
-            // Add event listener to navigate to details page
             detailsButton.addEventListener('click', () => {
                 window.location.href = `detailsPage.php?id=${book.id}`;
             });
@@ -229,7 +221,7 @@ fetch(API_ENDPOINT)
 
             article.appendChild(img);
             article.appendChild(title);
-            article.appendChild(authors); // Replaced description with authors
+            article.appendChild(authors);
             article.appendChild(detailsButton);
             article.appendChild(actionsDiv);
 
@@ -245,34 +237,23 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(API_ENDPOINT)
         .then(response => response.json())
         .then(data => {
-            // Filter out books without ratings
             const ratedBooks = data.items.filter(book => book.volumeInfo.averageRating);
-
-            // Sort rated books by rating (highest to lowest)
             ratedBooks.sort((a, b) => b.volumeInfo.averageRating - a.volumeInfo.averageRating);
-
-            // Get the container for popular books
             const popularBooksContainer = document.querySelector("#popular .popular__swiper .swiper-wrapper");
-
-            // Clear any existing content in the container
             popularBooksContainer.innerHTML = "";
 
-            // Populate the container with popular book cards
             ratedBooks.forEach(book => {
                 const bookInfo = book.volumeInfo;
 
-                // Create a new card for the book
                 const card = document.createElement("a");
-                card.href = bookInfo.previewLink; // Link to Google Books preview
+                card.href = bookInfo.previewLink;
                 card.classList.add("popular__card", "swiper-slide");
 
-                // Create the image element for the book cover
                 const img = document.createElement("img");
                 img.src = bookInfo.imageLinks.thumbnail;
                 img.alt = "Book cover";
                 img.classList.add("popular__img");
 
-                // Create the content for the book card
                 const content = document.createElement("div");
                 content.innerHTML = `
                     <h2 class="popular__title">${bookInfo.title}</h2>
@@ -287,12 +268,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 `;
 
-                // Append image and content to the card
                 card.appendChild(img);
                 card.appendChild(content);
-
-                // Append the card to the container
-                popularBooks.Container.appendChild(card);
+                popularBooksContainer.appendChild(card);
             });
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -307,7 +285,6 @@ document.addEventListener("DOMContentLoaded", () => {
     searchForm.addEventListener('submit', event => {
         event.preventDefault();
         const query = searchInput.value.trim();
-        console.log("Search query:", query); // Debugging
         if (query) {
             fetchBooks(query);
         }
@@ -315,7 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function fetchBooks(query) {
         const API_ENDPOINT = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`;
-        console.log("API Endpoint:", API_ENDPOINT); // Debugging
 
         fetch(API_ENDPOINT)
             .then(response => {
@@ -325,7 +301,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                console.log("API Response Data:", data); // Debugging
                 if (!data.items) {
                     throw new Error('No items found in the response');
                 }
@@ -335,24 +310,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function displayBooks(books) {
-        popularGrid.innerHTML = ''; // Clear previous results
+        popularGrid.innerHTML = '';
 
         books.forEach(book => {
             const bookInfo = book.volumeInfo;
 
-            // Create a new card for the book
             const card = document.createElement("a");
-            card.href = bookInfo.previewLink || "#"; // Link to Google Books preview or fallback to '#'
+            card.href = bookInfo.previewLink || "#";
             card.classList.add("popular__card", "swiper-slide");
-            card.target = "_blank"; // Open link in a new tab
+            card.target = "_blank";
 
-            // Create the image element for the book cover
             const img = document.createElement("img");
-            img.src = bookInfo.imageLinks?.thumbnail || 'default-thumbnail.jpg'; // Fallback image
+            img.src = bookInfo.imageLinks?.thumbnail || 'default-thumbnail.jpg';
             img.alt = `${bookInfo.title} cover`;
             img.classList.add("popular__img");
 
-            // Create the content for the book card
             const content = document.createElement("div");
             content.classList.add("popular__content");
             content.innerHTML = `
@@ -362,13 +334,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a href="./detailsPage.php?id=${book.id}" class="PopularButton">Details</a>
             `;
 
-            // Append image and content to the card
             card.appendChild(img);
             card.appendChild(content);
-
-            // Append the card to the container
             popularGrid.appendChild(card);
         });
     }
 });
-

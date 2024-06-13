@@ -167,7 +167,6 @@ require 'config.php'; // Adjust the path as needed
             <div class="featured__container container">
                 <div class="featured__swiper swiper">
                     <div class="swiper-wrapper">
-                        <!-- JavaScript will populate this section with book data -->
                     </div>
 
                     <div class="swiper-button-prev">

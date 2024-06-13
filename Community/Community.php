@@ -25,13 +25,7 @@
                 <i class="ri-book-3-line"></i> SocialBook's
             </a>
         </div>
-        <div class="navbar-center">
-            <ul>
-                <li><a href=""><span>Home</span></a></li>
-                <li><a href="" class="active-link"><span>Community</span></a></li>
-                <li><a href=""><span>My follow</span></a></li>
-            </ul>
-        </div>
+      
         <div class="navbar-right">
             <img src="./images/user-1.png" class="nav-profile-img " onclick="toggleMenu()">
         </div>

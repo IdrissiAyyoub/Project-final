@@ -223,7 +223,7 @@ a {
     flex-basis: 25%;
     align-self: flex-start;
     position: sticky;
-    top: 74px ;
+    top: 74px;
 }
 
 .search-container {
@@ -303,12 +303,13 @@ a {
     border-radius: 5px;
     cursor: pointer;
 }
+
 /* ------------------------main-content-------------------- */
 .main-content {
     flex-basis: 45%;
     margin: 0 auto;
 
-  
+
 }
 
 .create-post {
@@ -376,6 +377,7 @@ a {
     background-color: #0056b3;
     /* Darken the button on hover */
 }
+
 .sort-by {
     display: flex;
     align-items: center;
@@ -389,14 +391,16 @@ a {
     background: #ccc;
 }
 
-.sort-by p{
+.sort-by p {
     font-size: 13px;
     padding-left: 5px;
 }
+
 .sort-by p span {
     font-weight: 600;
     cursor: pointer;
 }
+
 .sort-by p span i {
     width: 12px;
     margin-left: 3px;
@@ -456,7 +460,7 @@ a {
     align-items: center;
     justify-content: space-between;
     padding: 10px 0;
-    font-size:  14px;
+    font-size: 14px;
     font-weight: 500;
 }
 
@@ -486,14 +490,16 @@ a {
     overflow: hidden;
     transition: max-height 0.5s;
 }
+
 .profile-menu-wrap.open-menu {
     max-height: 400px;
 }
+
 .profile-menu {
     background: #222;
     color: #fff;
     padding: 20px;
-    margin: 10px ;
+    margin: 10px;
 }
 
 .user-info {
@@ -524,6 +530,7 @@ a {
     background: var(--white-color);
     margin: 15px 0 10px;
 }
+
 .profile-link-menu {
     display: flex;
     align-items: center;
@@ -532,7 +539,7 @@ a {
     font-size: 14px;
 }
 
-.profile-link-menu p{
+.profile-link-menu p {
     width: 100%;
 }
 

@@ -1,71 +1,8 @@
 <?php
-session_start(); // Start the session if not already started
-
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "pfe";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Retrieve UserID from session
-$UserID = $_SESSION['UserID'] ?? null;
-
-if (!$UserID) {
-    header("Location: register/login.php"); // Redirect to login page if not logged in
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $bookID = $_POST['bookID'];
-    $userComment = $_POST['user-comment'];
-    $uploadDir = 'uploads/';
-    $uploadFile = $uploadDir . basename($_FILES['book-pdf-upload']['name']);
-
-    // Check if the uploads directory exists, if not, create it
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
-
-    // Verify if BookID exists in the books table
-    $stmt = $conn->prepare("SELECT BookID FROM books WHERE BookID = ?");
-    $stmt->bind_param("i", $bookID);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        // BookID exists, proceed with file upload
-        if (move_uploaded_file($_FILES['book-pdf-upload']['tmp_name'], $uploadFile)) {
-            $pdfPath = $uploadFile;
-
-            $stmt = $conn->prepare("INSERT INTO sharedbooks (UserID, BookID, Comment, PDFPath) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("iiss", $UserID, $bookID, $userComment, $pdfPath);
-
-            if ($stmt->execute()) {
-                header("Location: success.php"); // Redirect to a success page
-                exit();
-            } else {
-                echo "Error: " . $stmt->error;
-            }
-
-            $stmt->close();
-        } else {
-            echo "Possible file upload attack!";
-        }
-    } else {
-        echo "Invalid BookID. Please select a valid book.";
-    }
-}
-
-$conn->close();
+session_start(); // Start the session
+require_once './config.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,23 +20,18 @@ $conn->close();
 <body>
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="#" class="nav__logo">
+            <a href="./IndexPage.php" class="nav__logo">
                 <i class="ri-book-3-line"></i> SocialBook's
             </a>
             <div class="nav__menu">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a href="#home" class="nav__link active-link">
+                        <a href="./IndexPage.php" class="nav__link active-link">
                             <i class="ri-home-line"></i>
                             <span>Home</span>
                         </a>
                     </li>
-                    <li class="nav__item">
-                        <a href="#books" class="nav__link">
-                            <i class="ri-booklet-line"></i>
-                            <span>Book's</span>
-                        </a>
-                    </li>
+
                     <li class="nav__item">
                         <a href="#community" class="nav__link">
                             <i class="ri-group-line"></i>
@@ -114,7 +46,6 @@ $conn->close();
             </div>
         </nav>
     </header>
-
     <div class="login grid" id="login-content">
         <form action="" class="login__from grid">
             <h3 class="login__title">Log In</h3>
@@ -130,7 +61,10 @@ $conn->close();
             </div>
             <div>
                 <span class="login__signup">You do not have an account? <a href="#">Sign up</a></span>
-                <button type="submit" class="login__button button">Log In</button>
+                <?php if (!isset($_SESSION['UserID'])) : ?>
+                    <!-- Display the button if the user is not logged in -->
+                    <button type="submit" class="login__button button">Log In</button>
+                <?php endif; ?>
             </div>
         </form>
         <i class="ri-close-line login__close" id="login-close"></i>
@@ -139,82 +73,314 @@ $conn->close();
     <main>
         <section class="book-details">
             <div class="book-cover">
-                <img id="book-cover" src="http://books.google.com/books/content?id=KY2Om6YFseEC&printsec=frontcover&img=1&zoom=1&source=gbs_api" alt="Book Cover">
+                <img id="book-cover" src="" alt="Book Cover">
             </div>
             <div class="book-info">
-                <h1 id="book-title">When Dragons Dream</h1>
-                <p class="rating" id="book-rating">Rating: N/A</p>
-                <p class="genre" id="book-genre">Genre: Romance</p>
-                <p class="description" id="book-description">When Dragons Dream by Kathleen O'Brien released on Sep 24, 1993 is available now for purchase.</p>
+                <h1 id="book-title">Book Title</h1>
+                <p class="rating" id="book-rating">Rating: </p>
+                <p class="genre" id="book-genre">Genre: </p>
                 <div class="authors">
-                    <p><strong>Authors:</strong> Kathleen O'Brien</p>
-                    <p><strong>Publisher:</strong> Harlequin Books</p>
-                    <p><strong>Published Date:</strong> 1993</p>
-                    <p><strong>Page Count:</strong> 228</p>
-                    <p><strong>ISBN-10:</strong> 0373116004</p>
-                    <p><strong>ISBN-13:</strong> 9780373116003</p>
-                    <p><strong>Language:</strong> English</p>
+                    <p><strong>Authors:</strong></p>
+                    <p><strong>Publisher:</strong></p>
+                    <p><strong>Published Date:</strong></p>
+                    <p><strong>Page Count:</strong></p>
+                    <p><strong>ISBN-10:</strong></p>
+                    <p><strong>ISBN-13:</strong></p>
+                    <p><strong>Language:</strong></p>
                 </div>
                 <div class="links">
-                    <p><strong>Links :</strong></p>
+                    <p><strong>Links:</strong></p>
                     <div class="link-section">
-                        <a href="http://books.google.com/books?id=KY2Om6YFseEC&q=query+subject:romance&dq=query+subject:romance&hl=&cd=1&source=gbs_api" id="preview-link">Preview</a>
-                        <a href="http://books.google.com/books?id=KY2Om6YFseEC&dq=query+subject:romance&hl=&source=gbs_api" id="info-link">Info</a>
-                        <a href="http://play.google.com/books/reader?id=KY2Om6YFseEC&hl=&source=gbs_api" id="web-reader-link">Web Reader</a>
+                        <a href="#" id="preview-link">Preview</a>
+                        <a href="#" id="info-link">Info</a>
+                        <a href="#" id="web-reader-link">Web Reader</a>
                     </div>
                     <div class="share-section">
-                        <a href="<?php echo isset($_SESSION['UserID']) ? '#' : 'register/login.php'; ?>" id="shareButton"><i class="ri-share-forward-line"></i> Share</a>
-                        <a href="#"><i class="ri-save-line"></i> Save</a>
+                        <a href="#" id="saveButton"><i class="ri-save-line"></i> Save</a>
+
+                        <a href="#" id="shareButton"><i class="ri-share-forward-line"></i> Share</a>
                     </div>
                 </div>
             </div>
         </section>
+        <div class="description">
+            <h2>Description:</h2>
+            <p id="book-description"></p>
+        </div>
+        <div id="saveModal" class="modal">
+            <div class="modal-content">
+                <div>
+                    <span class="close">&times;</span>
+                </div>
+                <div id="book-info-container" class="book-info-container">
+                    <!-- Book Information will be dynamically added here -->
+                </div>
+                <form id="saveBookForm" action="save_book.php" method="POST">
+                    <select name="readingStatus" id="readingStatus">
+                        <option value="to-read">To read</option>
+                        <option value="reading">Reading</option>
+                        <option value="read">Read</option>
+                    </select>
+                    <input type="hidden" name="bookID" id="modalBookID">
+                    <button type="submit" id="saveModalSaveBtn" class="button">Save</button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div id="shareModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="shareForm" action="submit.php" method="POST" enctype="multipart/form-data">
+                    <!-- Comment Section -->
+                    <div class="modal-comment-section">
+                        <input type="text" name="user-comment" id="user-comment" placeholder="Enter your comment or opinion">
+                    </div>
+                    <!-- Book Information -->
+                    <div class="modal-book-info">
+                        <img id="modal-book-cover" src="" alt="Book Cover">
+                        <div>
+                            <h2 class="popular__title" id="modal-book-title">Book Title</h2>
+                            <div class="popular__author" id="modal-book-authors">Author Name</div>
+                            <div class="popular__stars" id="modal-book-rating">Rating</div>
+                        </div>
+                    </div>
+                    <!-- PDF Upload Section -->
+                    <div class="modal-comment-section">
+                        <p>If you have the PDF of this book, please upload it to help the community:</p>
+                        <input type="file" name="book-pdf-upload" id="book-pdf-upload" accept=".pdf">
+                    </div>
+                    <input type="hidden" name="bookID" id="modal-bookID">
+                    <div class="modal-footer">
+                        <button type="submit" class="button" id="submit-comment">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </main>
+    <h2>More like that :</h2>
 
     <footer class="footer">
         <div class="footer__container container grid">
             <div>
-                <a href="" class="footer__logo"><i class="ri-book-3-line"></i> SocialBook's</a>
-                <p class="footer__description">Where Readers Connect and Share Their Literary Adventures.</p>
+                <a href="#" class="footer__logo">
+                    <i class="ri-book-3-line"></i> SocialBook's
+                </a>
+                <p class="footer__description">
+                    Discover your next favorite book
+                </p>
             </div>
-            <div class="footer__data grid">
-                <div>
-                    <h3 class="footer__title">About</h3>
-                    <ul class="footer__links">
-                        <li><a href="" class="footer__link">Awards</a></li>
-                        <li><a href="" class="footer__link">FAQs</a></li>
-                        <li><a href="" class="footer__link">Privacy policy</a></li>
-                        <li><a href="" class="footer__link">Terms of services</a></li>
+            <div class="footer__content">
+                <div class="footer__data">
+                    <h3 class="footer__subtitle">About</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">About Us</a></li>
+                        <li><a href="#" class="footer__link">Features</a></li>
+                        <li><a href="#" class="footer__link">New</a></li>
+                        <li><a href="#" class="footer__link">Blog</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="footer__title">Links</h3>
-                    <ul class="footer__links">
-                        <li><a href="" class="footer__link">Home</a></li>
-                        <li><a href="" class="footer__link">Community</a></li>
-                        <li><a href="" class="footer__link">Search</a></li>
+                <div class="footer__data">
+                    <h3 class="footer__subtitle">Company</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Team</a></li>
+                        <li><a href="#" class="footer__link">Plan Pricing</a></li>
+                        <li><a href="#" class="footer__link">Become a member</a></li>
+                        <li><a href="#" class="footer__link">Sponsorship</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="footer__title">Contact</h3>
-                    <ul class="footer__links">
-                        <li><a href="" class="footer__link">Contact Us</a></li>
-                        <li><a href="" class="footer__link">Support</a></li>
-                        <li><a href="" class="footer__link">Affiliates</a></li>
+                <div class="footer__data">
+                    <h3 class="footer__subtitle">Support</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">FAQs</a></li>
+                        <li><a href="#" class="footer__link">Support center</a></li>
+                        <li><a href="#" class="footer__link">Contact us</a></li>
+                    </ul>
+                </div>
+                <div class="footer__data">
+                    <h3 class="footer__subtitle">Follow us</h3>
+                    <ul class="footer__social">
+                        <a href="#" class="footer__social-link"><i class="ri-facebook-fill"></i></a>
+                        <a href="#" class="footer__social-link"><i class="ri-instagram-fill"></i></a>
+                        <a href="#" class="footer__social-link"><i class="ri-twitter-fill"></i></a>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="footer__social">
-            <a href="#" class="footer__social-link"><i class="ri-facebook-line"></i></a>
-            <a href="#" class="footer__social-link"><i class="ri-twitter-line"></i></a>
-            <a href="#" class="footer__social-link"><i class="ri-instagram-line"></i></a>
+        <div class="footer__info container">
+            <span class="footer__copy">&#169; SocialBook's. All rights reserved</span>
+            <div class="footer__privacy">
+                <a href="#">Terms & Agreements</a>
+                <a href="#">Privacy Policy</a>
+            </div>
         </div>
-        <p class="footer__copy">&#169; 2024 SocialBook's. All rights reserved.</p>
     </footer>
 
     <script src="./js/swiper-bundle.min.js"></script>
     <script src="./js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const API_KEY = "AIzaSyBoRapgZn6sbfT03pNKLC-fCVyPeuzN7ew";
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookId = urlParams.get('id');
+
+            if (bookId) {
+                fetchBookDetails(bookId);
+            } else {
+                console.error("Book ID not found in URL parameters.");
+            }
+
+            function fetchBookDetails(id) {
+                const API_ENDPOINT = `https://www.googleapis.com/books/v1/volumes/${id}?key=${API_KEY}`;
+
+                fetch(API_ENDPOINT)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data && data.volumeInfo) {
+                            displayBookDetails(data.volumeInfo);
+                            setupModal(data.volumeInfo, id);
+                        } else {
+                            throw new Error('No data received from API or invalid book ID');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching book details:', error);
+                        // Display error message or handle error as needed
+                    });
+            }
+
+            function displayBookDetails(bookInfo) {
+                // Display book details in the main section
+                document.getElementById('book-cover').src = bookInfo.imageLinks?.thumbnail || 'default-thumbnail.jpg';
+                document.getElementById('book-title').textContent = bookInfo.title || 'Unknown Title';
+                document.getElementById('book-rating').textContent = `Rating: ${bookInfo.averageRating || 'N/A'}`;
+                document.getElementById('book-genre').textContent = `Genre: ${bookInfo.categories ? bookInfo.categories.join(", ") : "Unknown Genre"}`;
+                document.getElementById('book-description').textContent = bookInfo.description || "No description available.";
+                document.querySelector('.authors').innerHTML = `
+                    <p><strong>Authors:</strong> ${bookInfo.authors ? bookInfo.authors.join(", ") : "Unknown Authors"}</p>
+                    <p><strong>Publisher:</strong> ${bookInfo.publisher || "Unknown Publisher"}</p>
+                    <p><strong>Published Date:</strong> ${bookInfo.publishedDate || "Unknown Date"}</p>
+                    <p><strong>Page Count:</strong> ${bookInfo.pageCount || "N/A"}</p>
+                    <p><strong>ISBN-10:</strong> ${bookInfo.industryIdentifiers ? bookInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_10')?.identifier : "N/A"}</p>
+                    <p><strong>ISBN-13:</strong> ${bookInfo.industryIdentifiers ? bookInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_13')?.identifier : "N/A"}</p>
+                    <p><strong>Language:</strong> ${bookInfo.language || "N/A"}</p>
+                `;
+
+                document.getElementById('preview-link').href = bookInfo.previewLink || "#";
+                document.getElementById('info-link').href = bookInfo.infoLink || "#";
+                document.getElementById('web-reader-link').href = bookInfo.canonicalVolumeLink || "#";
+            }
+
+            function setupModal(bookInfo, bookId) {
+                document.getElementById('modal-book-cover').src = bookInfo.imageLinks?.thumbnail || 'default-thumbnail.jpg';
+                document.getElementById('modal-book-title').textContent = bookInfo.title || 'Unknown Title';
+                document.getElementById('modal-book-authors').textContent = `Authors: ${bookInfo.authors ? bookInfo.authors.join(", ") : "Unknown Authors"}`;
+                document.getElementById('modal-book-rating').textContent = `Rating: ${bookInfo.averageRating || 'N/A'}`;
+                document.getElementById('modalBookID').value = bookId;
+            }
+
+            const saveButton = document.getElementById("saveButton");
+            const saveModal = document.getElementById("saveModal");
+            const saveModalSaveBtn = document.getElementById("saveModalSaveBtn");
+            const closeModalButton = saveModal.querySelector(".close");
+
+            // Function to open the save modal with book data
+            function openSaveModal(book) {
+                // Show the save modal
+                saveModal.style.display = "block";
+
+                // Create elements to display book information
+                const img = document.createElement('img');
+                img.src = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : './Images/default.jpg';
+                img.alt = 'image';
+                img.classList.add('featured__img');
+
+                const title = document.createElement('h2');
+                title.classList.add('featured__title');
+                title.textContent = book.volumeInfo.title || 'Untitled';
+
+                const authors = document.createElement('div');
+                authors.classList.add('featured__prices');
+                const authorsList = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author';
+                authors.innerHTML = `<span class="featured__discount">${authorsList}</span><br>`;
+
+                // Append book information to the modal
+                const bookInfoContainer = document.getElementById('book-info-container');
+                bookInfoContainer.innerHTML = ''; // Clear previous content
+                bookInfoContainer.appendChild(img);
+                bookInfoContainer.appendChild(title);
+                bookInfoContainer.appendChild(authors);
+            }
+
+            // Event listener for the save button
+            saveButton.addEventListener("click", () => {
+                // Retrieve book information from the details page
+                const book = {
+                    volumeInfo: {
+                        title: document.getElementById('book-title').textContent,
+                        authors: Array.from(document.querySelectorAll('.authors p')).map(p => p.textContent.split(': ')[1]),
+                        imageLinks: {
+                            thumbnail: document.getElementById('book-cover').src
+                        },
+                        // Add other properties as needed
+                    }
+                };
+
+                // Open the save modal with book data
+                openSaveModal(book);
+            });
+
+            // Event listener to close the modal when clicking on the close button
+            closeModalButton.addEventListener("click", () => {
+                saveModal.style.display = "none";
+            });
+
+            // Event listener to close the modal when clicking outside the modal content
+            window.addEventListener("click", (event) => {
+                if (event.target == saveModal) {
+                    saveModal.style.display = "none";
+                }
+            });
+
+            // Event listener for the save button inside the modal
+            saveModalSaveBtn.addEventListener("click", (event) => {
+                event.preventDefault(); // Prevent the default form submission
+
+                const readingStatus = document.getElementById('readingStatus').value;
+                const bookID = document.getElementById('modalBookID').value;
+
+                // Perform AJAX request to save the book
+                const formData = new FormData();
+                formData.append('bookID', bookID);
+                formData.append('readingStatus', readingStatus);
+
+                fetch('savePage.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Book saved successfully!');
+                            saveModal.style.display = "none"; // Close the modal after saving
+                        } else {
+                            alert('Error saving book: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error saving book.');
+                    });
+            });
+        });
+    </script>
 </body>
 
 </html>
