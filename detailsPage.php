@@ -107,28 +107,8 @@ require_once './config.php';
             <h2>Description:</h2>
             <p id="book-description"></p>
         </div>
-        <div id="saveModal" class="modal">
-            <div class="modal-content">
-                <div>
-                    <span class="close">&times;</span>
-                </div>
-                <div id="book-info-container" class="book-info-container">
-                    <!-- Book Information will be dynamically added here -->
-                </div>
-                <form id="saveBookForm" action="save_book.php" method="POST">
-                    <select name="readingStatus" id="readingStatus">
-                        <option value="to-read">To read</option>
-                        <option value="reading">Reading</option>
-                        <option value="read">Read</option>
-                    </select>
-                    <input type="hidden" name="bookID" id="modalBookID">
-                    <button type="submit" id="saveModalSaveBtn" class="button">Save</button>
-                </form>
-            </div>
-        </div>
 
 
-        <!-- Modal -->
         <div id="shareModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -158,6 +138,19 @@ require_once './config.php';
                 </form>
             </div>
         </div>
+        <div id="saveModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="book-info-container"></div>
+                <select id="readingStatus">
+                    <option value="to-read">To Read</option>
+                    <option value="reading">Reading</option>
+                    <option value="read">Read</option>
+                </select>
+                <button id="saveModalSaveBtn">Save</button>
+            </div>
+        </div>
+        <button id="saveButton">Save Book</button>
 
     </main>
     <h2>More like that :</h2>
@@ -252,26 +245,24 @@ require_once './config.php';
                     })
                     .catch(error => {
                         console.error('Error fetching book details:', error);
-                        // Display error message or handle error as needed
                     });
             }
 
             function displayBookDetails(bookInfo) {
-                // Display book details in the main section
                 document.getElementById('book-cover').src = bookInfo.imageLinks?.thumbnail || 'default-thumbnail.jpg';
                 document.getElementById('book-title').textContent = bookInfo.title || 'Unknown Title';
                 document.getElementById('book-rating').textContent = `Rating: ${bookInfo.averageRating || 'N/A'}`;
                 document.getElementById('book-genre').textContent = `Genre: ${bookInfo.categories ? bookInfo.categories.join(", ") : "Unknown Genre"}`;
                 document.getElementById('book-description').textContent = bookInfo.description || "No description available.";
                 document.querySelector('.authors').innerHTML = `
-                    <p><strong>Authors:</strong> ${bookInfo.authors ? bookInfo.authors.join(", ") : "Unknown Authors"}</p>
-                    <p><strong>Publisher:</strong> ${bookInfo.publisher || "Unknown Publisher"}</p>
-                    <p><strong>Published Date:</strong> ${bookInfo.publishedDate || "Unknown Date"}</p>
-                    <p><strong>Page Count:</strong> ${bookInfo.pageCount || "N/A"}</p>
-                    <p><strong>ISBN-10:</strong> ${bookInfo.industryIdentifiers ? bookInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_10')?.identifier : "N/A"}</p>
-                    <p><strong>ISBN-13:</strong> ${bookInfo.industryIdentifiers ? bookInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_13')?.identifier : "N/A"}</p>
-                    <p><strong>Language:</strong> ${bookInfo.language || "N/A"}</p>
-                `;
+            <p><strong>Authors:</strong> ${bookInfo.authors ? bookInfo.authors.join(", ") : "Unknown Authors"}</p>
+            <p><strong>Publisher:</strong> ${bookInfo.publisher || "Unknown Publisher"}</p>
+            <p><strong>Published Date:</strong> ${bookInfo.publishedDate || "Unknown Date"}</p>
+            <p><strong>Page Count:</strong> ${bookInfo.pageCount || "N/A"}</p>
+            <p><strong>ISBN-10:</strong> ${bookInfo.industryIdentifiers ? bookInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_10')?.identifier : "N/A"}</p>
+            <p><strong>ISBN-13:</strong> ${bookInfo.industryIdentifiers ? bookInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_13')?.identifier : "N/A"}</p>
+            <p><strong>Language:</strong> ${bookInfo.language || "N/A"}</p>
+        `;
 
                 document.getElementById('preview-link').href = bookInfo.previewLink || "#";
                 document.getElementById('info-link').href = bookInfo.infoLink || "#";
@@ -283,20 +274,47 @@ require_once './config.php';
                 document.getElementById('modal-book-title').textContent = bookInfo.title || 'Unknown Title';
                 document.getElementById('modal-book-authors').textContent = `Authors: ${bookInfo.authors ? bookInfo.authors.join(", ") : "Unknown Authors"}`;
                 document.getElementById('modal-book-rating').textContent = `Rating: ${bookInfo.averageRating || 'N/A'}`;
-                document.getElementById('modalBookID').value = bookId;
+                document.getElementById('modal-bookID').value = bookId;
             }
 
+            const shareModal = document.getElementById("shareModal");
+            const shareCloseButton = shareModal.querySelector(".close");
             const saveButton = document.getElementById("saveButton");
             const saveModal = document.getElementById("saveModal");
+            const saveModalCloseButton = saveModal.querySelector(".close");
             const saveModalSaveBtn = document.getElementById("saveModalSaveBtn");
-            const closeModalButton = saveModal.querySelector(".close");
+
+            // Event listener to close the share modal when clicking on the close button
+            shareCloseButton.addEventListener("click", () => {
+                shareModal.style.display = "none";
+            });
+
+            // Event listener to close the share modal when clicking outside the modal content
+            window.addEventListener("click", (event) => {
+                if (event.target == shareModal) {
+                    shareModal.style.display = "none";
+                }
+            });
+
+            // Event listener to open the save modal
+            saveButton.addEventListener("click", () => {
+                const book = {
+                    volumeInfo: {
+                        title: document.getElementById('book-title').textContent,
+                        authors: Array.from(document.querySelectorAll('.authors p')).map(p => p.textContent.split(': ')[1]),
+                        imageLinks: {
+                            thumbnail: document.getElementById('book-cover').src
+                        }
+                    }
+                };
+
+                openSaveModal(book);
+            });
 
             // Function to open the save modal with book data
             function openSaveModal(book) {
-                // Show the save modal
                 saveModal.style.display = "block";
 
-                // Create elements to display book information
                 const img = document.createElement('img');
                 img.src = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : './Images/default.jpg';
                 img.alt = 'image';
@@ -311,38 +329,19 @@ require_once './config.php';
                 const authorsList = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author';
                 authors.innerHTML = `<span class="featured__discount">${authorsList}</span><br>`;
 
-                // Append book information to the modal
                 const bookInfoContainer = document.getElementById('book-info-container');
-                bookInfoContainer.innerHTML = ''; // Clear previous content
+                bookInfoContainer.innerHTML = '';
                 bookInfoContainer.appendChild(img);
                 bookInfoContainer.appendChild(title);
                 bookInfoContainer.appendChild(authors);
             }
 
-            // Event listener for the save button
-            saveButton.addEventListener("click", () => {
-                // Retrieve book information from the details page
-                const book = {
-                    volumeInfo: {
-                        title: document.getElementById('book-title').textContent,
-                        authors: Array.from(document.querySelectorAll('.authors p')).map(p => p.textContent.split(': ')[1]),
-                        imageLinks: {
-                            thumbnail: document.getElementById('book-cover').src
-                        },
-                        // Add other properties as needed
-                    }
-                };
-
-                // Open the save modal with book data
-                openSaveModal(book);
-            });
-
-            // Event listener to close the modal when clicking on the close button
-            closeModalButton.addEventListener("click", () => {
+            // Event listener to close the save modal when clicking on the close button
+            saveModalCloseButton.addEventListener("click", () => {
                 saveModal.style.display = "none";
             });
 
-            // Event listener to close the modal when clicking outside the modal content
+            // Event listener to close the save modal when clicking outside the modal content
             window.addEventListener("click", (event) => {
                 if (event.target == saveModal) {
                     saveModal.style.display = "none";
@@ -351,12 +350,11 @@ require_once './config.php';
 
             // Event listener for the save button inside the modal
             saveModalSaveBtn.addEventListener("click", (event) => {
-                event.preventDefault(); // Prevent the default form submission
+                event.preventDefault();
 
                 const readingStatus = document.getElementById('readingStatus').value;
-                const bookID = document.getElementById('modalBookID').value;
+                const bookID = document.getElementById('modal-bookID').value;
 
-                // Perform AJAX request to save the book
                 const formData = new FormData();
                 formData.append('bookID', bookID);
                 formData.append('readingStatus', readingStatus);
@@ -369,7 +367,7 @@ require_once './config.php';
                     .then(data => {
                         if (data.success) {
                             alert('Book saved successfully!');
-                            saveModal.style.display = "none"; // Close the modal after saving
+                            saveModal.style.display = "none";
                         } else {
                             alert('Error saving book: ' + data.message);
                         }

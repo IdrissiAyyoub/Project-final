@@ -170,7 +170,7 @@
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis provident quas nulla earum exercitationem itaque sapiente quam assumenda veritatis iste aut corporis, iusto esse debitis natus doloremque reprehenderit maxime facilis!
                 </p>
-                <img src="./images/post-image-1.png" alt="" width="100%">
+                <img src="./images/post-imag.png" alt="" width="100%">
                 <div class="post-stats">
                     <div>
                         <span class="linked-user">Ayyoub and 75 others</span>
