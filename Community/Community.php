@@ -37,7 +37,7 @@
                     <img src="./images/user-1.png" alt="">
                     <div>
                         <h3>Ayyoub Idrissi</h3>
-                        <a href="#">See your profile</a>
+                        <a href="../Community/profile.php">See your profile</a>
                     </div>
                 </div>
                 <hr>

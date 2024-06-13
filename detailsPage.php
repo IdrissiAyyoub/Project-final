@@ -109,6 +109,7 @@ require_once './config.php';
         </div>
 
 
+        <!-- Share Modal -->
         <div id="shareModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -131,13 +132,15 @@ require_once './config.php';
                         <p>If you have the PDF of this book, please upload it to help the community:</p>
                         <input type="file" name="book-pdf-upload" id="book-pdf-upload" accept=".pdf">
                     </div>
-                    <input type="hidden" name="bookID" id="modal-bookID">
+                    <input name="bookID" id="modal-bookID">
                     <div class="modal-footer">
                         <button type="submit" class="button" id="submit-comment">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
+
+        <!-- Save Modal -->
         <div id="saveModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -150,6 +153,10 @@ require_once './config.php';
                 <button id="saveModalSaveBtn">Save</button>
             </div>
         </div>
+
+        <!-- Save Button -->
+        <button id="saveButton">Save Book</button>
+
         <button id="saveButton">Save Book</button>
 
     </main>
