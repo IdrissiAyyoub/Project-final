@@ -1,19 +1,8 @@
 <?php
+
 session_start();
 require '../config.php'; // Adjust the path as needed
 
-// Check and create the uploads directory
-$uploadDirectory = 'uploads';
-
-if (!is_dir($uploadDirectory)) {
-    if (!mkdir($uploadDirectory, 0777, true)) {
-        // Handle error if directory creation fails
-        echo "Failed to create directory '$uploadDirectory'";
-        exit();
-    }
-}
-
-// Continue with your existing PHP script
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_SESSION['registration'])) {
         // Redirect to the first step if no session data found
@@ -25,50 +14,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $bio = $_POST['bio'];
     $birthday = $_POST['birthday'];
     $genre = $_POST['genre'];
-    $books_interests = $_POST['books_interests'];
 
     // Upload profile picture
     $profilePicture = NULL;
-    if (!empty($_FILES['profile_picture']['name'])) {
-        $target_dir = "uploads/";
-        $target_file = $target_dir . basename($_FILES["profile_picture"]["name"]);
-        if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
-            $profilePicture = $target_file;
-        } else {
-            echo "Failed to upload profile picture.";
-            exit();
-        }
+    if (!empty($_FILES['profile_picture']['tmp_name'])) {
+        $profilePicture = file_get_contents($_FILES['profile_picture']['tmp_name']);
     }
 
     // Retrieve the data from the session
     $fullname = $_SESSION['registration']['FullName'];
     $email = $_SESSION['registration']['Email'];
-    $password = $_SESSION['registration']['Password'];
-    $_SESSION['UserID'] = $UserID;
-    // Insert the data into the database
-    $sql = "INSERT INTO users (Username, FullName, Email, Password, Genre, Birthday, Bio, ProfilePicture) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssss", $username, $fullname, $email, $password, $genre, $birthday, $bio, $profilePicture);
+    $password = password_hash($_SESSION['registration']['Password'], PASSWORD_DEFAULT); // Encrypt the password
 
-    if ($stmt->execute()) {
-        echo "Registration successful!";
+    try {
+        // Check if username or email already exists
+        $stmt = $conn->prepare("SELECT UserID FROM users WHERE Username = :username OR Email = :email");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            echo "Username or email already exists.";
+            exit();
+        }
 
-        // Set UserID session variable
-        $_SESSION['UserID'] = $stmt->insert_id; // Assuming your user ID column is auto-incremented
+        // Insert the data into the users table
+        $sql = "INSERT INTO users (Username, FullName, Email, Password, Genre, Birthday, Bio, ProfilePicture) 
+                VALUES (:username, :fullname, :email, :password, :genre, :birthday, :bio, :profilePicture)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':fullname', $fullname);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':genre', $genre);
+        $stmt->bindParam(':birthday', $birthday);
+        $stmt->bindParam(':bio', $bio);
+        $stmt->bindParam(':profilePicture', $profilePicture, PDO::PARAM_LOB);
 
-        // Unset the session data after successful registration
-        unset($_SESSION['registration']);
-        header("Location: ../IndexPage.php"); // Redirect to index.php
-        exit();
-    } else {
-        echo "Error: " . $stmt->error;
+        if ($stmt->execute()) {
+            // Get the last inserted user ID
+            $userID = $conn->lastInsertId();
+
+            // Set UserID session variable
+            $_SESSION['UserID'] = $userID;
+
+            // Unset the session data after successful registration
+            unset($_SESSION['registration']);
+            header("Location: ../IndexPage.php"); // Redirect to index.php
+            exit();
+        } else {
+            echo "Error: " . $stmt->errorInfo()[2];
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -78,29 +78,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <!--=============== FAVICON ===============-->
     <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-
-    <!--=============== REMIXICONS ===============-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
-
-    <!---Custom CSS File--->
     <link rel="stylesheet" href="registration.css" />
-    <style>
-        .book-item {
-            display: inline-block;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            padding: 5px 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-
-        .delete-icon {
-            cursor: pointer;
-            margin-left: 5px;
-        }
-    </style>
 </head>
 
 <body>
@@ -112,8 +92,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </a>
         </div>
         <header>More informations</header>
-        <!-- Additional Information Form -->
         <form action="" method="post" enctype="multipart/form-data" class="form">
+            <div class="image">
+                <label for="input-file" id="drop-area">
+                    <div id="img-view">
+                        <i class="ri-upload-cloud-2-line"></i>
+                        <p>Click here to upload image</p>
+                    </div>
+                    <input type="file" name="profile_picture" id="input-file" accept="image/*" required hidden>
+                </label>
+            </div>
+
             <div class="input-box">
                 <label>Username</label>
                 <input type="text" name="username" placeholder="Enter username" required />
@@ -145,58 +134,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
 
-            <div class="input-box">
-                <label>Profile Picture</label>
-                <input type="file" name="profile_picture" accept="image/*" required />
-            </div>
-
-            <div class="input-box">
-                <label>Books Interests</label>
-                <input type="text" name="books_interests" id="books-interests" placeholder="Search for books interests" required />
-                <div id="entered-text"></div>
-                <div id="books-list"></div>
-            </div>
 
             <button type="submit">Submit</button>
         </form>
-
     </section>
 
-    <!-- Custom JavaScript -->
-    <script>
-        document.getElementById('books-interests').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Prevent form submission
-                var enteredText = this.value.trim();
-                if (enteredText !== '') {
-                    var enteredTextElement = document.getElementById('entered-text');
-                    enteredTextElement.textContent = 'Last one you enter :' + enteredText;
-                    this.value = ''; // Clear the input field
 
-                    // Create book element
-                    var bookElement = document.createElement('div');
-                    bookElement.classList.add('book-item');
-                    bookElement.innerHTML = `
-                        <span>${enteredText}</span>
-                        <i class="ri-close-circle-line delete-icon" data-book="${enteredText}"></i>
-                    `;
-                    document.getElementById('books-list').appendChild(bookElement);
-
-                    // Attach event listener to delete icon
-                    var deleteIcons = document.querySelectorAll('.delete-icon');
-                    deleteIcons.forEach(function(icon) {
-                        icon.addEventListener('click', function() {
-                            var bookToRemove = this.getAttribute('data-book');
-                            var bookToRemoveElement = document.querySelector(`[data-book="${bookToRemove}"]`);
-                            if (bookToRemoveElement) {
-                                bookToRemoveElement.parentElement.remove();
-                            }
-                        });
-                    });
-                }
-            }
-        });
-    </script>
 </body>
+<script>
+    const dropArea = document.getElementById('drop-area');
+    const inputFile = document.getElementById('input-file');
+    const imageView = document.getElementById('img-view');
+
+    dropArea.addEventListener('click', () => {
+        inputFile.click();
+    });
+
+    inputFile.addEventListener('change', uploadImage);
+
+    function uploadImage() {
+        let imgLink = URL.createObjectURL(inputFile.files[0]);
+        imageView.style.backgroundImage = `url(${imgLink})`;
+        imageView.textContent = '';
+        imageView.style.border = 0;
+    }
+</script>
 
 </html>

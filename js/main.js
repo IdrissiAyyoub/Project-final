@@ -177,7 +177,7 @@ sr.reveal('.search__images', { origin: 'right' })
 
 
 
-const API_ENDPOINT = "https://www.googleapis.com/books/v1/volumes?q=rating:>4&maxResults=40&key=AIzaSyBoRapgZn6sbfT03pNKLC-fCVyPeuzN7ew";
+const API_ENDPOINT = "https://www.googleapis.com/books/v1/volumes?q=subject:programming&key=AIzaSyBoRapgZn6sbfT03pNKLC-fCVyPeuzN7ew";
 
 fetch(API_ENDPOINT)
     .then(response => response.json())

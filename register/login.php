@@ -1,18 +1,22 @@
 <?php
 session_start();
-require '../config.php';
+require_once '../config.php';
 
 // Handling user registration
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
   $fullname = $_POST['fullname'];
   $email = $_POST['email'];
-  $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+  $password = $_POST['password'];
+
+  // Hash the password
+  $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+
 
   // Store the data in the session
   $_SESSION['registration'] = [
     'FullName' => $fullname,
     'Email' => $email,
-    'Password' => $password
+    'Password' => $password_hashed
   ];
 
   // Redirect to the second step or perform additional validation if needed
@@ -25,39 +29,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  // Prepare and bind
-  $stmt = $conn->prepare("SELECT UserID, FullName, Password FROM users WHERE Email = ?");
-  $stmt->bind_param("s", $email);
+  // Prepare statement for selection
+  $stmt = $conn->prepare("SELECT UserID, FullName, Password FROM users WHERE Email = :email");
+  $stmt->bindParam(':email', $email);
 
   // Execute the statement
   $stmt->execute();
 
-  // Bind result variables
-  $stmt->bind_result($UserID, $FullName, $hashed_password);
+  // Fetch result
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  // Fetch value
-  if ($stmt->fetch()) {
+  if ($user) {
     // Verify password
-    if (password_verify($password, $hashed_password)) {
+    if (password_verify($password, $user['Password'])) {
       // Store user information in session
-      $_SESSION['UserID'] = $UserID;
-      $_SESSION['FullName'] = $FullName;
+      $_SESSION['UserID'] = $user['UserID'];
+      $_SESSION['FullName'] = $user['FullName'];
       $_SESSION['Email'] = $email;
 
       // Redirect to a logged-in page (e.g., dashboard)
       header("Location: ../IndexPage.php");
       exit();
     } else {
-      $login_error = "Invalid password.";
+      $login_errors['password'] = "Invalid password.";
     }
   } else {
-    $login_error = "No user found with that email address.";
+    $login_errors['email'] = "No user found with that email address.";
   }
-
-  $stmt->close();
-  $conn->close();
 }
+
+// Close the database connection
+$conn = null;
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
   <title>Sign in & Sign up Form</title>
   <!-- Styles -->
   <link rel="stylesheet" href="./style.css">
+
 </head>
 
 <body>
@@ -75,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
       <div class="inner-box">
         <div class="forms-wrap">
           <!-- Login Form -->
-          <form action="" method="post" autocomplete="off" class="sign-in-form">
+          <form action="" method="post" autocomplete="off" class="sign-in-form" id="loginForm">
             <div class="logo">
               <a href="#" class="nav__logo">
                 <i class="ri-book-3-line"></i> SocialBook's
@@ -90,14 +96,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 
             <div class="actual-form">
               <div class="input-wrap">
-                <input type="email" name="email" class="input-field" autocomplete="off" required>
+                <input type="email" name="email" id="loginEmail" class="input-field" autocomplete="off">
                 <label>Email</label>
               </div>
+              <span id="loginEmailError" class="error"></span>
+
 
               <div class="input-wrap">
-                <input type="password" name="password" minlength="4" class="input-field" autocomplete="off" required>
+                <input type="password" name="password" id="loginPassword" minlength="4" class="input-field" autocomplete="off">
                 <label>Password</label>
               </div>
+              <span id="loginPasswordError" class="error"></span>
+
 
               <input type="hidden" name="login" value="1">
 
@@ -111,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
           </form>
 
           <!-- Registration Form -->
-          <form action="" method="post" autocomplete="off" class="sign-up-form">
+          <form action="" method="post" autocomplete="off" class="sign-up-form" id="registerForm">
             <div class="logo">
               <a href="#" class="nav__logo">
                 <i class="ri-book-3-line"></i> SocialBook's
@@ -126,19 +136,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 
             <div class="actual-form">
               <div class="input-wrap">
-                <input type="text" name="fullname" minlength="4" class="input-field" autocomplete="off" required>
+                <input type="text" name="fullname" id="registerFullName" minlength="4" class="input-field" autocomplete="off">
                 <label>Full Name</label>
               </div>
+              <span id="registerFullNameError" class="error"></span>
+
 
               <div class="input-wrap">
-                <input type="email" name="email" class="input-field" autocomplete="off" required>
+                <input type="email" name="email" id="registerEmail" class="input-field" autocomplete="off">
                 <label>Email</label>
               </div>
+              <span id="registerEmailError" class="error"></span>
+
 
               <div class="input-wrap">
-                <input type="password" name="password" minlength="4" class="input-field" autocomplete="off" required>
+                <input type="password" name="password" id="registerPassword" minlength="4" class="input-field" autocomplete="off">
                 <label>Password</label>
               </div>
+              <span id="registerPasswordError" class="error"></span>
+
 
               <input type="hidden" name="register" value="1">
 
@@ -182,6 +198,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 
   <!-- Javascript file -->
   <script src="app.js"></script>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      var email = document.getElementById("loginEmail").value;
+      var password = document.getElementById("loginPassword").value;
+      var emailError = document.getElementById("loginEmailError");
+      var passwordError = document.getElementById("loginPasswordError");
+      emailError.textContent = "";
+      passwordError.textContent = "";
+
+      if (!email) {
+        emailError.textContent = "Email is required";
+        event.preventDefault();
+      }
+      if (!password) {
+        passwordError.textContent = "Password is required";
+        event.preventDefault();
+      }
+    });
+
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+      var fullName = document.getElementById("registerFullName").value;
+      var email = document.getElementById("registerEmail").value;
+      var password = document.getElementById("registerPassword").value;
+      var fullNameError = document.getElementById("registerFullNameError");
+      var emailError = document.getElementById("registerEmailError");
+      var passwordError = document.getElementById("registerPasswordError");
+      fullNameError.textContent = "";
+      emailError.textContent = "";
+      passwordError.textContent = "";
+
+      if (!fullName) {
+        fullNameError.textContent = "Full name is required";
+        event.preventDefault();
+      }
+      if (!email) {
+        emailError.textContent = "Email is required";
+        event.preventDefault();
+      }
+      if (!password) {
+        passwordError.textContent = "Password is required";
+        event.preventDefault();
+      }
+    });
+  </script>
 </body>
 
 </html>

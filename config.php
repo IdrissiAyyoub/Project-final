@@ -5,8 +5,14 @@ $password = "";
 $dbname = "pfe";
 $googleApiKey = "AIzaSyBoRapgZn6sbfT03pNKLC-fCVyPeuzN7ew";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+try {
+    // Create a new PDO instance
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    // Set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+   
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
 }

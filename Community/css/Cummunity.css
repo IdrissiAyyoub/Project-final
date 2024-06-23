@@ -438,7 +438,8 @@ a {
 
 .post p {
     font-size: 14px;
-    margin-bottom: 15px;
+    margin-bottom: 2rem;
+
 }
 
 .post-stats {
@@ -470,14 +471,35 @@ a {
     align-items: center;
 }
 
-/* .post-activity i {
-    width: 22px;
-} */
+.post-activity-link {
+    /* Your existing styles */
+    cursor: pointer;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.post-activity-link:hover {
+    background-color: #f0f0f0;
+    /* Example hover color */
+}
+
+.post-activity-link.liked {
+    background-color: #1877f2;
+    /* Change to your desired liked color */
+    color: white;
+    /* Text color when liked */
+    border-color: #1877f2;
+    /* Border color when liked */
+    /* Add any other styles for liked state */
+}
 
 .post-activity-link i {
     width: 18px;
     margin-right: 4px;
 }
+
 
 /* ------------------Profile drop down ---------------- */
 
@@ -546,4 +568,199 @@ a {
 .profile-link-menu i {
     width: 35px;
     margin-right: 5px;
+}
+
+
+
+.profile-main {
+    flex-basis: 74%;
+}
+
+.profile-sidebar {
+    flex-basis: 25%;
+    align-self: flex-start;
+    position: sticky;
+    top: 74%;
+}
+
+.profile-container {
+    background: #fff;
+}
+
+.profile-container-inner {
+    padding: 0 4% 10px;
+}
+
+.profile-pic {
+    width: 150px;
+    border-radius: 50%;
+    margin-top: -75px;
+    padding: 5px;
+    background: #fff;
+}
+
+.profile-container h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 2%;
+}
+
+.profile-container b {
+    font-weight: 500;
+}
+
+;
+
+.profile-container p {
+    margin-top: 5px;
+}
+
+.profile-container p a {
+    color: #000000;
+    font-weight: 500;
+}
+
+.profile-btn a {
+    display: inline-flex;
+    align-items: center;
+    color: #ffffff;
+    background: var(--first-color);
+    padding: 6px 15px;
+    margin-right: 10px;
+    margin-top: 2%;
+}
+
+.profile-description {
+    background: #fff;
+    padding: 22px 4% 30px;
+    margin: 12px 0;
+}
+
+.profile-description h2 {
+    color: #333;
+    margin: 10px 0 20px;
+    font-weight: 600;
+}
+
+.comments-section {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.comment {
+
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.comment p {
+    font-size: 14px;
+    width: fit-content;
+    margin: .5rem 0rem;
+    border-radius: 5px;
+    padding: 1rem .5rem;
+    background: var(--border-color);
+}
+
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.comment-author h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #141414;
+}
+
+.comment-author img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.add-comment form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.add-comment img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.add-comment textarea {
+    height: auto;
+    resize: vertical;
+    position: relative;
+    height: 40px;
+    width: 350px;
+    outline: none;
+    font-size: 1rem;
+    color: #a6aabf;
+    margin-top: 8px;
+    border-bottom: 2px solid #282a33;
+    border-radius: 6px;
+    padding: 0 15px;
+}
+
+.add-comment button {
+    display: inline-block;
+    background-color: var(--first-color);
+    color: var(--white-color);
+    font-weight: var(--font-semi-bold);
+    padding: .5rem .7rem;
+    border: none;
+    margin-top: .5rem;
+    margin-left: .9rem;
+    transition: box-shadow .4s;
+    cursor: pointer;
+}
+
+.popular__card {
+    margin: -1.7rem 0 .9rem 2.4rem;
+    width: 396px;
+    display: flex;
+    align-items: center;
+    column-gap: 2.5rem;
+    background-color: var(--container-color);
+    padding: 1.5rem 1rem;
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    transition: border .4s, background-color .4s;
+}
+
+.popular__card:hover {
+    border: 2px solid var(--text-color);
+
+}
+
+.popular__img {
+    width: 100px;
+    box-shadow: -8px 9px 11.8px 0px #00000067;
+}
+
+.popular__title {
+    font-size: var(--h2-font-size);
+    margin-bottom: .5rem;
+}
+
+.popular__prices {
+    display: flex;
+    align-items: center;
+    column-gap: .75rem;
+    margin-bottom: .75rem;
+}
+
+.popular__author {
+    color: var(--title-color);
+    margin-top: .5rem;
 }
