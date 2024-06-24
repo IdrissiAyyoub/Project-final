@@ -462,14 +462,7 @@ try {
                             <span class="popular__author"><?php echo htmlspecialchars($book['AuthorName']); ?></span>
                             <p class="popular__goal"><?php echo htmlspecialchars($book['Goal']); ?></p>
                             <div class="statusDelete">
-                                <form action="profile.php" method="POST" class="card-actions">
-                                    <input type="hidden" name="update_status" value="<?php echo htmlspecialchars($book['SavedBookID']); ?>">
-                                    <select name="new_status" onchange="this.form.submit()">
-                                        <option value="to-read">To-Read</option>
-                                        <option value="reading">Reading</option>
-                                        <option value="read">Read</option>
-                                    </select>
-                                </form>
+                               
                                 <form action="profile.php" method="POST" class="card-actions">
                                     <input type="hidden" name="delete_book" value="<?php echo htmlspecialchars($book['SavedBookID']); ?>">
                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this book?');">

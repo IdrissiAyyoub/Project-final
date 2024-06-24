@@ -142,6 +142,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li><a class="linkname" href="#">User Information</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="../logout.php">
+                    <i class="ri-logout-circle-line"></i></i>
+                    <span class="linkname">Log out</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="linkname" href="#">User Information</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
     <div class="container light-style flex-grow-1 container-p-y">

@@ -45,7 +45,7 @@ try {
     }
 
     // Count books shared
-    $sql = "SELECT COUNT(*) AS shared_count FROM shared_books WHERE UserID = :user_id";
+    $sql = "SELECT COUNT(*) AS shared_count FROM books WHERE UserID = :user_id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmt->execute();
@@ -140,32 +140,24 @@ unset($conn);
                     <img src="data:image/jpeg;base64,<?php echo base64_encode($profilePicture); ?>" alt="">
                     <div>
                         <h3><?php echo htmlspecialchars($fullname); ?></h3>
-                        <a href="../Community/userProfile.php">See your profile</a>
+                        <a href="usersessionprofile.php">See your profile</a>
                     </div>
                 </div>
                 <hr>
-                <a href="#" class="profile-link-menu">
-                    <i class="ri-feedback-fill"></i>
-                    <p>Give Feedback</p>
-                    <span>></span>
-                </a>
-                <a href="#" class="profile-link-menu">
+                
+                <a href="userProfile.php" class="profile-link-menu">
                     <i class="ri-settings-line"></i>
                     <p>Setting & Privacy</p>
                     <span>></span>
                 </a>
-                <a href="#" class="profile-link-menu">
-                    <i class="ri-questionnaire-fill"></i>
-                    <p>Help & Support</p>
-                    <span>></span>
-                </a>
+                
                 <a href="#" class="profile-link-menu">
                     <i class="ri-contrast-2-fill"></i>
                     <p>Display</p>
                     <span>></span>
                 </a>
                 <hr>
-                <a href="#" class="profile-link-menu">
+                <a href="../logout.php" class="profile-link-menu">
                     <i class="ri-logout-circle-r-line"></i>
                     <p>Log out</p>
                     <span>></span>
@@ -179,8 +171,7 @@ unset($conn);
 
     <div class="container">
         <div class="left-sidebar">
-            <div class="sidebar-profile-box">
-                <img src="./images/cover-pic.png" width="100%">
+            <div class="sidebar-profile-box" style="margin-top: 4rem;">
                 <div class="sidebar-profile-info">
                     <img src="data:image/jpeg;base64,<?php echo base64_encode($profilePicture); ?>" alt="User Avatar">
                     <h1><?php echo htmlspecialchars($fullname); ?></h1>
@@ -198,20 +189,7 @@ unset($conn);
         </div>
 
         <div class="main-content">
-            <div class="create-post">
-                <div class="create-post-input">
-                    <img src="data:image/jpeg;base64,<?php echo base64_encode($profilePicture); ?>" alt="">
-                    <textarea placeholder="Write a post"></textarea>
-                </div>
-                <div class="post-button">
-                    <button>Post</button>
-                </div>
-            </div>
-
-            <div class="sort-by">
-                <hr>
-                <p>Sort by: <span>top <i class="ri-arrow-down-s-line"></i></span></p>
-            </div>
+            
 
             <!-- Sample Posts -->
             <?php foreach ($books as $book) : ?>
@@ -235,9 +213,7 @@ unset($conn);
                             <div class="popular__stars">
                                 <?php echo htmlspecialchars($book['Rating']); ?> <i class="ri-star-fill"></i>
                             </div>
-                            <div>
-                                <a href="./detailsPage.php?id=<?php echo urlencode($book['BookID']); ?>" class="PopularButton">Details</a>
-                            </div>
+                    
                         </div>
                     </div>
                     <!-- Post content -->

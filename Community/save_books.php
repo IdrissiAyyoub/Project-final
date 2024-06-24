@@ -99,6 +99,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li><a class="link_name" href="#">User Information</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="../logout.php">
+                    <i class="ri-logout-circle-line"></i></i>
+                    <span class="linkname">Log out</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Log out</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
     <section class="container">
